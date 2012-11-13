@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DV1222 - Lab3 - Rasmus Tilljander", "DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj", "{FB9E9305-3A29-42F7-B018-CAB6B57EC9A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB9E9305-3A29-42F7-B018-CAB6B57EC9A2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FB9E9305-3A29-42F7-B018-CAB6B57EC9A2}.Debug|Win32.Build.0 = Debug|Win32
+		{FB9E9305-3A29-42F7-B018-CAB6B57EC9A2}.Release|Win32.ActiveCfg = Release|Win32
+		{FB9E9305-3A29-42F7-B018-CAB6B57EC9A2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

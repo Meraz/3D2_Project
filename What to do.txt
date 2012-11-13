@@ -1,0 +1,40 @@
+En värld byggd på terrängen
+En partikelsol
+Shadowmap från solen
+Kamera man röra med musen 
+Träd
+Snurrande objekt
+
+
+o Skuggor (2.0 - 10.0p)
+o Terräng (1.0 - 10.0p)
+o Multitexturering (3.0p)
+o Billboarding (1.0 - 4.0p)
+o Avancerad kameraflygning och navigering (1.0 - 5.0p)
+o Partikelsystem (explosioner, rök, etc) (1.0 - 6.0p)
+o Deferred rendering (2.0 - 10.0p)
+o View frustum culling (4.0p med bounding volymer, 8.0p med spatial datastruktur) 
+
+
+
+o Backface culling (2.0p)
+o Multipassrendering (ex. motion blur, depth-of-field) (2.0-8.0p)
+o Sphere-mapping (3.0p) o Cube-mapping (2.0 - 4.0p)
+o Bump-mapping (1.0 - 5.0p)
+o Dimma (1.0 - 8.0p) o Screen Space Ambient Occlusion (6.0p)
+
+o Detail culling (5.0p)
+o Tessellering (2.0p - 10.0p)
+o Level-of-detail (1.0 - 10.0p)
+o Lens flare (2.0p)
+
+o Nivåverktyg (1.0-10.0p)
+o Occlusion culling (2.0p - 6.0p)
+o Reflektioner (1.0 - 6.0p)
+o Refraktion (3.0p)
+o Portal culling (3.0p)
+o Texturanimering (1.0p)
+o Avancerad Animering (vertex blending, morfning tex) (1.0-10.0p)
+o Kollisionsdetektering (2.0p för stråle mot enkla objekt, 4.0p för stråle 
+mot spatial datastruktur, 6.0p för kollisionsdetektering med boundingvolume-
+hierarkier)
