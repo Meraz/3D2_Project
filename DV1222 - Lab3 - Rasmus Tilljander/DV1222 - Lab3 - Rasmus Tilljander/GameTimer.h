@@ -21,6 +21,7 @@ public:
 private:
 	double mSecondsPerCount;
 	double mDeltaTime;
+    //TEST
 
 	__int64 mBaseTime;
 	__int64 mPausedTime;
