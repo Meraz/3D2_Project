@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "ResourceLoader.h"
 #include "ObjectLoader.h"
+#include "Tree.h"
 
 class WorldHandler
 {
@@ -40,6 +41,7 @@ private:
 	ShaderObject* mShaderObject;
 	D3DXMATRIX mWorldMatrix;
 	std::vector<Object*> mObject;
+	std::vector<Tree*> mTree;
 
 	ID3D10ShaderResourceView* CreateTex(std::wstring filename);
 

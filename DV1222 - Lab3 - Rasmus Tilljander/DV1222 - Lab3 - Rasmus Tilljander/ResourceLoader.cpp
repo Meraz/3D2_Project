@@ -26,6 +26,8 @@ void ResourceLoader::LoadTextures(ID3D10Device* lDevice)
 	CreateTextureShader(lDevice, "Textures/Stone.dds" , &mStoneTexture);
 	CreateTextureShader(lDevice, "Textures/Sun.dds" , &mSunTexture);
 	CreateTextureShader(lDevice, "Textures/BTH.dds" , &mBTHTexture);
+	CreateTextureShader(lDevice, "Textures/Tree.jpg" , &mTreeTexture);
+
 }
 
 void ResourceLoader::CreateTextureShader(ID3D10Device* lDevice, char* lTexturePath, ID3D10ShaderResourceView** lShaderResView)

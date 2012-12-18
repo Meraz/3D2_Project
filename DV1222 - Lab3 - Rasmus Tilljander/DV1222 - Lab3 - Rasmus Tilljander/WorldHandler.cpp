@@ -6,6 +6,8 @@ WorldHandler::WorldHandler()
 {
 	mShaderObject = new ShaderObject();
 	mObject = std::vector<Object*>();
+	mTree = std::vector<Tree*>();
+
 }
 
 WorldHandler::~WorldHandler()
@@ -24,26 +26,30 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 {
 	mDevice = lDevice;
 
-	mShaderObject->Initialize( mDevice, "Terrain.fx", D3D10_SHADER_ENABLE_STRICTNESS );
+	mShaderObject->Initialize( mDevice, "FX/Terrain.fx", D3D10_SHADER_ENABLE_STRICTNESS );
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTech");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTechWireFrame");
 	mShaderObject->SetTechniqueByInteger(0);
 
-	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "bth.obj", "Object.fx"));
+	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "bth.obj", "FX/Object.fx"));
+
+
+	Tree* a = new Tree();
+	a->Initialize(mDevice, D3DXVECTOR4(50, 50, 50, 0));
+	//mTree.push_back(a);
+
 	
 	SetResources();
-
 	mNumRows  = m;
 	mNumCols  = n;
 	cellSpace = dx;
 	mNumVertices = mNumRows*mNumCols;
 	mNumFaces    = (mNumRows-1)*(mNumCols-1)*2;
-	SetResources();
 
-	// Create the geometry and fill the vertex buffer. 
+	// Create the geometry and fill the vertex buffer.
 	LoadHeightmap();
 
-	int smoothLevel = 10;
+	int smoothLevel = 5;
 	for(int i = 0; i < smoothLevel; i++)
 	{
 		Smooth();
@@ -312,4 +318,5 @@ void WorldHandler::Draw()
     }
 
 	mObject.at(0)->Draw();
+	//mTree.at(0)->Draw();
 }

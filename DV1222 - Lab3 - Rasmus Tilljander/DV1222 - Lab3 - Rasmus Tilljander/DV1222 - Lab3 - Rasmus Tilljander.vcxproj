@@ -74,6 +74,7 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="Sun.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="WorldHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,12 +92,14 @@
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="ObjectVertex.h" />
     <ClInclude Include="Sun.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WorldHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Object.fx" />
+    <None Include="FX\Object.fx" />
+    <None Include="FX\Tree.fx" />
     <None Include="Rain.fx" />
     <None Include="Sun.fx" />
     <None Include="Terrain.fx" />

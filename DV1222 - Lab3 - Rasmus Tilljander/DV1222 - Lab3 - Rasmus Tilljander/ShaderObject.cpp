@@ -9,6 +9,7 @@ mEffect(NULL), mEffectTechnique(NULL), mInputLayout(NULL)
 	mInputLayout = std::vector<ID3D10InputLayout*>();
 	mInputLayout.resize(1, 0);
 	mCurrentEffectTechnique = 0;
+	mDevice = 0;
 }
 
 ShaderObject::~ShaderObject()

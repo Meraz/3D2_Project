@@ -46,7 +46,6 @@ void Object::Initialize(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, char
 void Object::Update(float lDeltaTime)
 {
 
-
 }
 
 void Object::Draw()
@@ -56,10 +55,7 @@ void Object::Draw()
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
 
 	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-
-
+	
 	UINT stride = sizeof(ObjectVertex);
 	UINT offset = 0;
 

@@ -16,12 +16,12 @@ void ParticleHandler::Initialize(ID3D10Device* lDevice)
 {
 	mDevice = lDevice;
 	mParticleSystem[0] = new Rain();
-	mParticleSystem[0]->Initialize(lDevice, "Rain.fx", 100000, sizeof(ParticleVertex));
+	mParticleSystem[0]->Initialize(lDevice, "FX/Rain.fx", 100000, sizeof(ParticleVertex));
 	mParticleSystem[0]->AddEffect(ParticleVertexDescription, ParticleVertexInputLayoutNumElements, "StreamOutTech");
 	mParticleSystem[0]->AddEffect(ParticleVertexDescription, ParticleVertexInputLayoutNumElements, "DrawTech");
 
 	mParticleSystem[1] = new Sun();
-	mParticleSystem[1]->Initialize(lDevice, "Sun.fx", 1000, sizeof(ParticleVertex));
+	mParticleSystem[1]->Initialize(lDevice, "FX/Sun.fx", 1000, sizeof(ParticleVertex));
 	mParticleSystem[1]->AddEffect(ParticleVertexDescription, ParticleVertexInputLayoutNumElements, "StreamOutTech");
 	mParticleSystem[1]->AddEffect(ParticleVertexDescription, ParticleVertexInputLayoutNumElements, "DrawTech");
 }

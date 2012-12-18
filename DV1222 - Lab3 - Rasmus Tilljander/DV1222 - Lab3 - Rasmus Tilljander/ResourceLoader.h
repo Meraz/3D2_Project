@@ -50,6 +50,11 @@ public:
 	{
 		return mBTHTexture;
 	}
+
+	ID3D10ShaderResourceView* GetTreeTexture() const
+	{
+		return mBTHTexture;
+	}
 #pragma endregion
 
 private:
@@ -66,6 +71,7 @@ private:
 	ID3D10ShaderResourceView* mStoneTexture;
 	ID3D10ShaderResourceView* mSunTexture;
 	ID3D10ShaderResourceView* mBTHTexture;
+	ID3D10ShaderResourceView* mTreeTexture;
 
 };
 ResourceLoader& GetResourceLoader();

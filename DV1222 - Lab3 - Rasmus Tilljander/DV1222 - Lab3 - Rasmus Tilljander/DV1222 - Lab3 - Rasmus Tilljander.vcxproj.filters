@@ -69,6 +69,9 @@
     <ClCompile Include="Sun.cpp">
       <Filter>Source Files\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen.h">
@@ -122,6 +125,9 @@
     <ClInclude Include="Sun.h">
       <Filter>Header Files\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Textures\BlendMap.dds">
@@ -153,7 +159,8 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Rain.fx" />
-    <None Include="Object.fx" />
     <None Include="Sun.fx" />
+    <None Include="FX\Tree.fx" />
+    <None Include="FX\Object.fx" />
   </ItemGroup>
 </Project>

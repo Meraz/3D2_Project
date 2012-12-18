@@ -133,7 +133,6 @@ Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, char* lObjFileName, char
 
 	Object* lObject = new Object();
 	lObject->Initialize(lDevice, lVBuffer, lFXFileName, lVertex.size());
-	//lObject->();
 
 	return lObject;
 }
