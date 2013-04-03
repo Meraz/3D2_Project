@@ -7,7 +7,6 @@ WorldHandler::WorldHandler()
 	mShaderObject = new ShaderObject();
 	mObject = std::vector<Object*>();
 	mTree = std::vector<Tree*>();
-
 }
 
 WorldHandler::~WorldHandler()
@@ -29,15 +28,10 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 	mShaderObject->Initialize( mDevice, "FX/Terrain.fx", D3D10_SHADER_ENABLE_STRICTNESS );
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTech");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTechWireFrame");
+	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "BuildShadowMapTech");
 	mShaderObject->SetTechniqueByInteger(0);
 
 	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "bth.obj", "FX/Object.fx"));
-
-
-	Tree* a = new Tree();
-	a->Initialize(mDevice, D3DXVECTOR4(50, 50, 50, 0));
-	//mTree.push_back(a);
-
 	
 	SetResources();
 	mNumRows  = m;
@@ -143,6 +137,24 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
     D3D10_SUBRESOURCE_DATA iinitData;
     iinitData.pSysMem = &indices[0];
     mDevice->CreateBuffer(&ibd, &iinitData, &mIB);
+
+	CreateTrees();
+}
+
+void WorldHandler::CreateTrees()
+{
+	srand(time(NULL));
+
+	for(int i = 0; i < 50; i++)
+	{
+		float x, y, z;
+		x = (rand() % 200);// - 256;
+		z = (rand() % 200);// - 256;
+		y = GetHeight(x, z);
+		Tree* a = new Tree();
+		a->Initialize(mDevice, D3DXVECTOR4(x, y, z, 1));
+		mTree.push_back(a);
+	}
 }
 
 void WorldHandler::SetResources()
@@ -296,11 +308,41 @@ void WorldHandler::Update(float lDeltaTime)
 	mObject.at(0)->Update(lDeltaTime);
 }
 
-void WorldHandler::Draw()
+
+void WorldHandler::ShadowDraw(D3DXMATRIX lLightWVP)
+{
+	mShaderObject->SetTechniqueByInteger(2);
+	mShaderObject->SetMatrix("gLightWVP", lLightWVP);
+	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+
+	mDevice->IASetVertexBuffers(0,1, &mVB, &stride, &offset);
+	mDevice->IASetIndexBuffer(mIB, DXGI_FORMAT_R32_UINT, 0);
+	
+
+	D3D10_TECHNIQUE_DESC techDesc;
+	mShaderObject->GetTechnique()->GetDesc( &techDesc );
+	
+	for( UINT p = 0; p < techDesc.Passes; p++ )
+	{
+		mShaderObject->Render(p);
+		mDevice->DrawIndexed(mNumFaces*3,0,0);
+	}
+
+	mObject.at(0)->ShadowDraw(lLightWVP);
+	mShaderObject->SetTechniqueByInteger(0);
+}
+
+void WorldHandler::Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightWVP,ID3D10ShaderResourceView* lShadowmap)
 {
 	mShaderObject->SetMatrix("WorldMatrix", mWorldMatrix);
 	mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
+	mShaderObject->SetMatrix("gLightWVP", lLightWVP);
+	mShaderObject->SetFloat4("Sunpos", &lSunPos);
+	mShaderObject->SetResource("gShadowMap", lShadowmap);
 	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	UINT stride = sizeof(Vertex);
@@ -318,5 +360,10 @@ void WorldHandler::Draw()
     }
 
 	mObject.at(0)->Draw();
-	//mTree.at(0)->Draw();
+
+	for(int i = 0; i < 50; i++)
+	{
+		mTree.at(i)->Draw();
+	}
 }
+

@@ -2,9 +2,13 @@
 
 Screen::Screen()
 {	
-	mWorldHandler = new WorldHandler();
-	mGameTimer = new GameTimer();
-	mParticleHandler = new ParticleHandler();
+	mWorldHandler		= new WorldHandler();
+	mGameTimer			= new GameTimer();
+	mParticleHandler	= new ParticleHandler();
+	mShadowMap			= new DrawableTex2D();
+	mGravity = 9.82f*2;
+	mState = walking;
+	mSunPosition = 0;
 }
 
 Screen::~Screen()
@@ -12,18 +16,29 @@ Screen::~Screen()
 	delete mWorldHandler;
 	delete mGameTimer;
 	delete mParticleHandler;
+	delete mShadowMap;
 }
 
-void Screen::Initialize(ID3D10Device* lDevice)
+void Screen::Initialize(ID3D10Device* lDevice, ID3D10RenderTargetView *lRenderTargetView, ID3D10DepthStencilView *lDepthStencilView, UINT lClientHeight, UINT lClientWidth)
 {
 	mDevice = lDevice;
+	mClientHeight = lClientHeight;
+	mClientWidth = lClientWidth;
+	mRenderTargetView = lRenderTargetView;
+	mDepthStencilView = lDepthStencilView;
+
 
 	mWorldHandler->Initialize(lDevice, 513, 513, 1.0f);
-
+	
 	mGameTimer->Start();
 	mGameTimer->Tick();
+	mDeltaTime = mGameTimer->GetDeltaTime();
+	mGameTime = mGameTimer->GetGameTime();
 
 	mParticleHandler->Initialize(lDevice);
+	mSunPosition = mParticleHandler->GetParticleSystemPosition(1);
+	
+	mShadowMap->Initialize(mDevice, mClientWidth/2, mClientHeight/2, false, DXGI_FORMAT_UNKNOWN);
 
 	GetResourceLoader().LoadTextures(lDevice);
 	GetCamera().SetYPosition(mWorldHandler->GetHeight(GetCamera().GetPosition().x, GetCamera().GetPosition().z) + HeightOffset);
@@ -34,38 +49,83 @@ void Screen::Initialize(ID3D10Device* lDevice)
 
 void Screen::Update()
 {	
-	mGameTimer->Tick();
-	float lDeltaTime = mGameTimer->GetDeltaTime();
-	float lGameTime = mGameTimer->GetGameTime();
+	UpdateY();
 
 	float lWalkingSpeed = gPlayerMovementSpeed;
-	bool lWalking = false;
 
-	if(GetAsyncKeyState(VK_LSHIFT) & 0x8000)
+	if(GetAsyncKeyState(VK_LSHIFT) & 0x8000 && mState != falling)
 		lWalkingSpeed = gPlayerMovementSpeed*2;
-
-	if(GetAsyncKeyState('W') || GetAsyncKeyState('A') || GetAsyncKeyState('S') || GetAsyncKeyState('D') & 0x8000) 
-		lWalking = true;
 		
-	KeyBoardMovement(lWalkingSpeed, lDeltaTime);
-
-	if(lWalking)
-	{
-		GetCamera().SetYPosition(mWorldHandler->GetHeight(GetCamera().GetPosition().x, GetCamera().GetPosition().z) + HeightOffset);
-	}
-
-	mWorldHandler->Update(lDeltaTime);
-	mParticleHandler->Update(lDeltaTime, lGameTime);
+	KeyBoardMovement(lWalkingSpeed, mDeltaTime);
+		
+	mWorldHandler->Update(mDeltaTime);
+	mParticleHandler->Update(mDeltaTime, mGameTime);
 	
+	UpdateSunWVP();
+	mGameTimer->Tick();
+	mDeltaTime = mGameTimer->GetDeltaTime();
+	mGameTime = mGameTimer->GetGameTime();
+
+
 	GetCamera().RebuildView();	
+}
+
+void Screen::UpdateY()
+{
+	float x, y, z;
+	x = GetCamera().GetPosition().x;
+	y = GetCamera().GetPosition().y;
+	z = GetCamera().GetPosition().z;
+
+	mVelocityY -= mGravity*mDeltaTime;
+
+	if(mState == walking)
+		GetCamera().SetYPosition(mWorldHandler->GetHeight(x, z) + HeightOffset);
+	else
+	{
+		float newYPos = mWorldHandler->GetHeight(x, z) + HeightOffset;
+		if(y + (mVelocityY * mDeltaTime) <= newYPos)
+		{
+			//Reached ground
+			float lDeltaTime = (newYPos - y)/mVelocityY;
+			//Calculate new delta time
+			y += lDeltaTime*mVelocityY;
+			GetCamera().SetYPosition(y);
+			//Stop falling
+			mVelocityY = 0;
+			mState = walking;
+			return;
+		}
+		//Keep falling
+		y += mDeltaTime*mVelocityY;
+		GetCamera().SetYPosition(y);
+	}
+}
+
+void Screen::GroundCollision()
+{
+
+}
+
+void Screen::Jump()
+{
+	if(mState != falling)
+	{
+		mVelocityY = 40;
+		mState = falling;
+	}
 }
 
 void Screen::KeyBoardMovement(float lWalkingSpeed, float lDeltaTime)
 {
-	if(GetAsyncKeyState('A') & 0x8000) GetCamera().Strafe	(-lWalkingSpeed * lDeltaTime);
-	if(GetAsyncKeyState('D') & 0x8000) GetCamera().Strafe	(+lWalkingSpeed * lDeltaTime);
-	if(GetAsyncKeyState('W') & 0x8000) GetCamera().Walk		(+lWalkingSpeed * lDeltaTime);
-	if(GetAsyncKeyState('S') & 0x8000) GetCamera().Walk		(-lWalkingSpeed * lDeltaTime);
+		if(GetAsyncKeyState('A') & 0x8000)
+		{
+			GetCamera().Strafe(-lWalkingSpeed * lDeltaTime);
+		}
+		if(GetAsyncKeyState('D') & 0x8000) GetCamera().Strafe	(+lWalkingSpeed * lDeltaTime);
+		if(GetAsyncKeyState('W') & 0x8000) GetCamera().Walk		(+lWalkingSpeed * lDeltaTime);
+		if(GetAsyncKeyState('S') & 0x8000) GetCamera().Walk		(-lWalkingSpeed * lDeltaTime);
+
 	
 	if(GetAsyncKeyState('Q') & 0x8000) 
 	{
@@ -94,9 +154,47 @@ void Screen::KeyBoardMovement(float lWalkingSpeed, float lDeltaTime)
 		mWorldHandler->ChangeTechnique(0);
 	if(GetAsyncKeyState('4') & 0x8000) 
 		mWorldHandler->ChangeTechnique(1);
+	if(GetAsyncKeyState(VK_SPACE) & 0x8000)
+		Jump();
 }
+
 void Screen::Draw()
 {
-	mWorldHandler->Draw();
+	//create the shadowmap texture
+	mShadowMap->Begin();
+	mWorldHandler->ShadowDraw(mLightWVP);
+	mShadowMap->End();
+
+	ResetOMTargetsAndViewport();
+
+
+	mWorldHandler->Draw(*mSunPosition, mLightWVP,  mShadowMap->GetDepthMap());
 	mParticleHandler->Draw();
+}
+
+void Screen::ResetOMTargetsAndViewport()
+{
+	mDevice->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);
+	D3D10_VIEWPORT vp;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	vp.Width = mClientWidth;
+	vp.Height = mClientHeight;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	mDevice->RSSetViewports(1, &vp);
+}
+
+void Screen::UpdateSunWVP()
+{
+	D3DXMATRIX lView, lProj;
+	D3DXVECTOR3 lSunPos = (D3DXVECTOR3)*mSunPosition;
+	D3DXVECTOR3 lLookAt = D3DXVECTOR3(0,0,0);
+	D3DXVECTOR3 lRight = D3DXVECTOR3(1,0,0);
+	D3DXVECTOR3 lUp = D3DXVECTOR3(0,1,0);
+	//D3DXVec3Cross(&lUp, &lRight, D3DXVec3Normalize(&lSunPos,&lSunPos));
+		
+	D3DXMatrixPerspectiveFovLH(&lProj,0.5f*PI, (float)(mClientWidth/mClientHeight), 40.0f, 1000.0f);
+	D3DXMatrixLookAtLH(&lView, &lSunPos, &lLookAt, &lUp);
+	mLightWVP = lView * lProj;
 }

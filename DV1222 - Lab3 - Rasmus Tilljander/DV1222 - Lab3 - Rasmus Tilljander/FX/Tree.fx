@@ -7,7 +7,6 @@ struct VS_IN
 	float2 sizeW   : SIZE;
 };
 
-
 struct GS_OUT
 {
 	float4 posH    : SV_POSITION;
@@ -157,7 +156,9 @@ void GS(point VS_IN gIn[1],
 
 float4 PS(GS_OUT pIn) : SV_Target
 {
-	return tex2D.Sample( linearSampler, pIn.texC );
+	float4 a = tex2D.Sample( linearSampler, pIn.texC );
+	clip(a.w -0.25f);
+	return a;
 }
 
 

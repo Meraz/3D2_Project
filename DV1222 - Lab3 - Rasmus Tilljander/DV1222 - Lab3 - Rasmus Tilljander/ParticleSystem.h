@@ -35,6 +35,11 @@ public:
 		mEmitDirection = D3DXVECTOR4(lEmitDirection.x, lEmitDirection.y, lEmitDirection.z, 0.0f);
 	}
 
+	D3DXVECTOR4* GetPosition()
+	{
+		return &mEmitPosition;
+	}
+
 private:
 	void BuildVertexBuffer(UINT lStructSize);
  

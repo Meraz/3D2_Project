@@ -8,13 +8,12 @@ Snurrande objekt
 //Färdiga
 o Multitexturering (3.0p)									- Färdig, eller multitexturering på nått objekt
 o Partikelsystem (explosioner, rök, etc) (1.0 - 6.0p) 		- Färdiga, eller Laser - Fyrverkeri
-o Billboarding (1.0 - 4.0p) - 								- 90% färdiga, Billboardade träd
-
-o Avancerad kameraflygning och navigering (1.0 - 5.0p) 		- Hopp - Inte kunna gå upp för branta backar - Gravitation - Inte slå igenom marken
-o Terräng (1.0 - 10.0p) - 									- Kolla avancerad kameraflygning
+o Billboarding (1.0 - 4.0p) - 								- Färdiga, Billboardade träd - Om tid, kolla på utspawningen
+o Avancerad kameraflygning och navigering (1.0 - 5.0p) 		- Färdig, Inte kunna gå upp för branta backar
+o Terräng (1.0 - 10.0p) - 									- Färdig, polish arbete. Fixa en bättre heigthmap
 
 o Deferred rendering (2.0 - 10.0p) - 						- yes
-o Skuggor (2.0 - 10.0p) - 									- Shadow map
+o Skuggor (2.0 - 10.0p) - 				w					- Shadow map
 
 o Skuggor (2.0 - 10.0p) 									- ray tracing mot lådor
 o Kollisionsdetektering (2.0p för stråle mot enkla objekt)	- Se raytracing

@@ -72,6 +72,9 @@
     <ClCompile Include="Tree.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="DrawableTex2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableTex2D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

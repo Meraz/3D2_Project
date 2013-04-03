@@ -47,19 +47,17 @@ void Renderer::Initialize(HWND* lHwnd)
 	CreateBackBufferAndRenderTarget();
 	
 	GetResourceLoader().LoadTextures(mDevice);
-	mScreen->Initialize(mDevice);
+	mScreen->Initialize(mDevice, mRenderTargetView, mDepthStencilView, mHeight, mWidth);
 }
 
 void Renderer::CreateSwapChain()
 {
-			UINT createDeviceFlags = 0;
-#ifdef _DEBUG
-	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
-#endif
+	UINT createDeviceFlags = 0;
+
 
 	D3D10_DRIVER_TYPE driverTypes[] = 
 	{
-		D3D10_DRIVER_TYPE_HARDWARE,
+		D3D10_DRIVER_TYPE_HARDWARE
 	};
 	UINT numDriverTypes = sizeof(driverTypes) / sizeof(driverTypes[0]);
 

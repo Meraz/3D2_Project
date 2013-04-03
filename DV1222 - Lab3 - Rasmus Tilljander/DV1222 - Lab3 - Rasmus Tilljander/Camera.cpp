@@ -8,7 +8,7 @@ Camera& GetCamera()
 
 Camera::Camera()
 {
-	mPosition	= D3DXVECTOR3(-50.0f, 0.0f, 0.0f);
+	mPosition	= D3DXVECTOR3(-0.0f, 0.0f, 0.0f);
 	mUp			= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	mAim		= D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 	mDirection	= D3DXVECTOR3(1.0f, 0.0f, 0.0f);;
@@ -29,6 +29,7 @@ void Camera::SetPosition(D3DXVECTOR3 lPosition)
 	mPosition = lPosition;
 }
 
+//This will do something maybe, from cpp
 void Camera::SetYPosition(float lY)
 {
 	mPosition.y = lY;
@@ -61,11 +62,13 @@ void Camera::Update()
 	lAim = RotateY(lAim, mCameraAngleXZ*PI/180);
 	D3DXVec3Normalize(&lAim, &lAim);
 	lAim *= 100;
-	mAim = Translation(lAim, mPosition);
+	D3DXVECTOR3 lPosition = mPosition;
+	lPosition.y = 0;
+	mAim = Translation(lAim, lPosition);
 
 	//Direction
 	D3DXVec3Normalize(&lAim, &lAim);
-	lAim.y = 0;
+	//lAim.y = 0;
 	mDirection = lAim;
 }
 
@@ -140,15 +143,23 @@ D3DXVECTOR4 Camera::Multiply16(D3DXVECTOR4 v, D3DXMATRIX& m)
 
 void Camera::Pitch(float lAngle)
 {
-	Update();
 	mCameraAngleXY += lAngle;
+	if(mCameraAngleXY > 60)
+		mCameraAngleXY = 60;
+	else if(mCameraAngleXY < -60)
+		mCameraAngleXY = -60;
+	Update();
 	D3DXMatrixLookAtLH(&mView, &mPosition, &mAim, &mUp);
 }
 
 void Camera::Yaw(float lAngle)
 {
-	Update();
 	mCameraAngleXZ += lAngle;
+	if(mCameraAngleXZ > 360)
+		mCameraAngleXZ = 0;
+	if(mCameraAngleXZ < 0)
+		mCameraAngleXZ = 360;
+	Update();
 	D3DXMatrixLookAtLH(&mView, &mPosition, &mAim, &mUp);
 }
 
@@ -156,5 +167,3 @@ void Camera::RebuildView()
 {
 	D3DXMatrixLookAtLH(&mView, &mPosition, &mAim, &mUp);
 }
-
-

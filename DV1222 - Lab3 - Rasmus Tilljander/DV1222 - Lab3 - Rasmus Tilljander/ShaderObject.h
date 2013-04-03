@@ -20,7 +20,7 @@ public:
 	void SetMatrix(char* lVariable, D3DXMATRIX& mD3DXMatrix);
 	void SetFloat(char* lVariable, float lFloat);
 	void SetFloat3(char* lVariable, D3DXVECTOR3 lVector);
-	void SetFloat4(char* lVariable, D3DXVECTOR4 lVector);
+	void SetFloat4(char* lVariable, D3DXVECTOR4* lVector);
 	void Setint(char* lVariable, int lInt);
 	void SetBool(char* lVariable, bool lBool);
 	void SetRawData(char* lVariable, void* lData, size_t lSize);

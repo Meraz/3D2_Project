@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <time.h>
 #include "Utilities.h"
 #include "ShaderObject.h"
 #include "Vertex.h"
@@ -19,7 +20,9 @@ public:
 	virtual ~WorldHandler();
 	void Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx);
 	void Update(float lDeltaTime);
-	void Draw();
+	void ShadowDraw(D3DXMATRIX lLightWVP);
+
+	void Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightWVP,ID3D10ShaderResourceView* lShadowmap);
 
 	float Width() const;
 	float Depth() const;
@@ -34,6 +37,8 @@ private:
 
 	bool	InBounds(UINT i, UINT j);
 	float	Average(UINT i, UINT j);
+
+	void CreateTrees();
 
 private:
 

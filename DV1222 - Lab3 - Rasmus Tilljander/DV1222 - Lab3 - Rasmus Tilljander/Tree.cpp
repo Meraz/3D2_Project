@@ -2,7 +2,7 @@
 
 Tree::Tree()
 {
-
+	mShaderObject = new ShaderObject();
 }
 
 Tree::~Tree()
@@ -17,19 +17,17 @@ void Tree::Initialize(ID3D10Device* lDevice, D3DXVECTOR4 lPosition)
 	mShaderObject->AddTechniqueByName(BillboardVertexDescription, BillboardVertexInputLayoutNumElements, "DrawTech");
 	mShaderObject->SetResource("tex2D", GetResourceLoader().GetTreeTexture());
 	mShaderObject->SetTechniqueByInteger(0);
-	CreateVertexBuffer(lDevice,  &mVertexBuffer, 1, lPosition);
+	CreateVertexBuffer(1, lPosition);
 
 	D3DXMatrixIdentity(&mWorldMatrix);
 }
 
-void Tree::CreateVertexBuffer(ID3D10Device* lDevice, ID3D10Buffer** lVB, int lSize, D3DXVECTOR4 lPosition)
+void Tree::CreateVertexBuffer(int lSize, D3DXVECTOR4 lPosition)
 {	
-	ID3D10Buffer* lVBuffer = 0;
-
 	BillboardVertex temp;
 	temp.mPosition = lPosition;
-	temp.mSize = D3DXVECTOR2(400, 237);
-
+	temp.mSize = D3DXVECTOR2(7, 9);
+	temp.mPosition.y += 4.0f;
 
 	// Create the buffer to kick-off the particle system.
 	D3D10_BUFFER_DESC vbd;
@@ -40,20 +38,8 @@ void Tree::CreateVertexBuffer(ID3D10Device* lDevice, ID3D10Buffer** lVB, int lSi
     vbd.MiscFlags = 0;
     D3D10_SUBRESOURCE_DATA vinitData;
 	vinitData.pSysMem = &temp;
-	lDevice->CreateBuffer(&vbd, &vinitData, &lVBuffer);
-
-
-	D3D10_BUFFER_DESC bd;
-	bd.Usage = D3D10_USAGE_DYNAMIC;
-	bd.ByteWidth = sizeof( BillboardVertex ) * lSize;
-	bd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
-	bd.MiscFlags = 0;
-
-	mDevice->CreateBuffer( &bd, 0, lVB );
+	mDevice->CreateBuffer(&vbd, &vinitData, &mVertexBuffer);
 }
-
-
 
 void Tree::Draw()
 {

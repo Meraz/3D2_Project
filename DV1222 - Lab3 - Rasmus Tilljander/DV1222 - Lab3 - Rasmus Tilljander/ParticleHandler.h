@@ -14,6 +14,9 @@ public:
 	~ParticleHandler();
 	void Initialize(ID3D10Device* lDevice);
 
+	D3DXVECTOR4* GetParticleSystemPosition(UINT lIndex);
+
+
 
 	void Update(float lDeltaTime, float lGameTime);
 	void Draw();
@@ -23,6 +26,7 @@ private:
 private:
 	ID3D10Device* mDevice;
 	std::vector<ParticleSystem*> mParticleSystem;
+	UINT mTotalParticleSystem;
 
 };
 

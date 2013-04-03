@@ -53,7 +53,7 @@ public:
 
 	ID3D10ShaderResourceView* GetTreeTexture() const
 	{
-		return mBTHTexture;
+		return mTreeTexture;
 	}
 #pragma endregion
 

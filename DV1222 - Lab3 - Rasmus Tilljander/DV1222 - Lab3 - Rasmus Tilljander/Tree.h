@@ -1,7 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include <D3DX10.h>
+#include "Utilities.h"
 #include "ShaderObject.h"
 #include "ResourceLoader.h"
 #include "Camera.h"
@@ -39,7 +39,7 @@ private:
 	int mNumberOfVertices;
 
 private:
-	void CreateVertexBuffer(ID3D10Device* lDevice, ID3D10Buffer** lVB, int lSize, D3DXVECTOR4 lPosition);
+	void CreateVertexBuffer(int lSize, D3DXVECTOR4 lPosition);
 
 };
 

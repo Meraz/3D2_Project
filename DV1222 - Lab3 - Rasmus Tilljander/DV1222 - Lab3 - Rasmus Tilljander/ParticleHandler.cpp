@@ -4,6 +4,7 @@ ParticleHandler::ParticleHandler()
 {
 	mParticleSystem = std::vector<ParticleSystem*>();
 	mParticleSystem.resize(AmountOfParticleSystems, 0);
+	mTotalParticleSystem = 0;
 }
 
 ParticleHandler::~ParticleHandler()
@@ -26,7 +27,6 @@ void ParticleHandler::Initialize(ID3D10Device* lDevice)
 	mParticleSystem[1]->AddEffect(ParticleVertexDescription, ParticleVertexInputLayoutNumElements, "DrawTech");
 }
 
-
 void ParticleHandler::Update(float lDeltaTime, float lGameTime)
 {
 	for(int i = 0; i < AmountOfParticleSystems; i++)
@@ -37,4 +37,10 @@ void ParticleHandler::Draw()
 {
 	for(int i = 0; i < AmountOfParticleSystems; i++)
 		mParticleSystem[i]->Draw();
+}
+
+
+D3DXVECTOR4* ParticleHandler::GetParticleSystemPosition(UINT lIndex)
+{
+	return mParticleSystem[lIndex]->GetPosition();
 }

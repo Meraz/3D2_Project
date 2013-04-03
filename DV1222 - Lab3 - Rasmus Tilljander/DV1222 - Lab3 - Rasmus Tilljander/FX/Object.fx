@@ -1,3 +1,5 @@
+#include "ShadowMap.fx"
+
 cbuffer PerObject
 {
 	float4x4 WorldMatrix;
@@ -8,7 +10,7 @@ cbuffer PerObject
 struct VertexShaderIn
 {
 	float4 Position		: POSITION;
-	float2 Normal		: NORMAL;
+	float3 Normal		: NORMAL;
 	float2 TexCoord		: TEXCOORD;
 };
 
@@ -107,4 +109,14 @@ technique10 ColorTechWireFrame
         SetRasterizerState(Wireframe);
 		SetDepthStencilState( NoDepthWrites, 0 );
     }
+}
+
+technique10 BuildShadowMapTech
+{
+	pass P0
+	{
+		SetVertexShader( CompileShader( vs_4_0, SHADOW_VS() ) );
+		SetGeometryShader( NULL );
+		SetPixelShader( CompileShader( ps_4_0, SHADOW_PS() ) );
+	}
 }

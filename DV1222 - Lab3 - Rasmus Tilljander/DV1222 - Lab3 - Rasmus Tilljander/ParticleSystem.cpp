@@ -44,6 +44,7 @@ void ParticleSystem::Reset()
 
 void ParticleSystem::BuildRandomTexture()
 {
+	
 	// Create the random data.
 	D3DXVECTOR4 randomValues[1024];
 
@@ -81,9 +82,12 @@ void ParticleSystem::BuildRandomTexture()
     viewDesc.Texture1D.MipLevels = texDesc.MipLevels;
 	viewDesc.Texture1D.MostDetailedMip = 0;
 	
+	if(mRandomTexRV != 0)	//Avoid memory leaks as this is called every update
+		SAFE_RELEASE(mRandomTexRV);
     mDevice->CreateShaderResourceView(randomTex, &viewDesc, &mRandomTexRV);
 
 	SAFE_RELEASE(randomTex);
+	
 }
 
 void ParticleSystem::Update(float lDeltaTime, float lGameTime)
@@ -129,8 +133,8 @@ void ParticleSystem::Draw()
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
 	mShaderObject->SetFloat("GameTime", mGameTime);
 	mShaderObject->SetFloat("DeltaTime", mDeltaTime);
-	mShaderObject->SetFloat4("CameraPosition", mCameraPosition);
-	mShaderObject->SetFloat4("EmitPosition", mEmitPosition);
-	mShaderObject->SetFloat4("EmitDirection", mEmitDirection);
+	mShaderObject->SetFloat4("CameraPosition", &mCameraPosition);
+	mShaderObject->SetFloat4("EmitPosition", &mEmitPosition);
+	mShaderObject->SetFloat4("EmitDirection", &mEmitDirection);
 	mShaderObject->SetResource("RandomTexture", mRandomTexRV);
 }

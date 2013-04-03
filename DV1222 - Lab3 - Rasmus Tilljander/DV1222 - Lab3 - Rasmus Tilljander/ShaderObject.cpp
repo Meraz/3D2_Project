@@ -1,4 +1,5 @@
 #include "ShaderObject.h"
+#include <exception>
 
 
 ShaderObject::ShaderObject():	
@@ -19,16 +20,14 @@ ShaderObject::~ShaderObject()
 	SAFE_RELEASE(mEffect);
 }
 
-HRESULT ShaderObject::Initialize(ID3D10Device* lDevice, char* lFilename, DWORD lShaderFlags) 
+HRESULT ShaderObject::Initialize(ID3D10Device* lDevice, char* lFilename, DWORD lShaderFlags)
 {
 	mDevice = lDevice;
-
-	HRESULT hr = S_OK;
+	HRESULT hr = S_OK;	
 
 	ID3DBlob*	pBlobEffect = NULL;
 	ID3DBlob*	pBlobErrors = NULL;
-	ID3D10Blob* compilationErrors = 0;
-	
+	ID3D10Blob* compilationErrors = 0;	
 
 #if defined(DEBUG) || defined(_DEBUG)
 	//dwShaderFlags |= D3D10_SHADER_DEBUG;
@@ -116,9 +115,9 @@ void ShaderObject::SetFloat3(char* lVariable, D3DXVECTOR3 lVector)
 	mEffect->GetVariableByName(lVariable)->AsVector()->SetFloatVector((float*)&lVector);
 }
 
-void ShaderObject::SetFloat4(char* lVariable, D3DXVECTOR4 lVector) 
+void ShaderObject::SetFloat4(char* lVariable, D3DXVECTOR4* lVector) 
 {
-	mEffect->GetVariableByName(lVariable)->AsVector()->SetFloatVector((float*)&lVector);
+	mEffect->GetVariableByName(lVariable)->SetRawValue((void*)lVector, 0 , sizeof(D3DXVECTOR4));
 }
 
 void ShaderObject::Setint(char* lVariable, int lInt) 

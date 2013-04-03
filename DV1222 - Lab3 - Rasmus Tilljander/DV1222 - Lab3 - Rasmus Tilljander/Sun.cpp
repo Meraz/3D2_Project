@@ -53,13 +53,11 @@ void Sun::Update(float ldt, float lGameTime)
 	mDeltaTime = ldt;
 	mAge += ldt;
 	if(mEmitPosition.z <= 513.0f)
-		mEmitPosition.z += 10*ldt;
+		mEmitPosition.z += 40*ldt;
 	else
 		mEmitPosition.z = -513.0f;
 	mEmitPosition.y = 513*cos((PI/1024)*mEmitPosition.z);
 }
-
-
 
 void Sun::Draw()
 {
