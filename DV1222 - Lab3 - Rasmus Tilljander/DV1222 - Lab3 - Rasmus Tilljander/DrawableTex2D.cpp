@@ -2,7 +2,7 @@
 
 DrawableTex2D::DrawableTex2D(): mWidth(0), mHeight(0), mColorMapFormat(DXGI_FORMAT_UNKNOWN),
 								mDevice(0), mColorMapSRV(0), mColorMapRTV(0), mDepthMapSRV(0),
-								mDepthMapDSV(0)
+								mDepthMapDSV(0), mDepthMap(0)
 {
 	ZeroMemory(&mViewport, sizeof(D3D10_VIEWPORT));
 }
@@ -37,7 +37,7 @@ void DrawableTex2D::Initialize(ID3D10Device* lDevice, UINT lWidth, UINT lHeight,
 #pragma region Build depth and color maps
 void DrawableTex2D::BuildDepthMap()
 {
-	ID3D10Texture2D* lDepthMap = NULL;
+	
 
 	D3D10_TEXTURE2D_DESC texDesc;
 
@@ -53,16 +53,14 @@ void DrawableTex2D::BuildDepthMap()
 	texDesc.CPUAccessFlags		= 0;
 	texDesc.MiscFlags			= 0;
 
-	if(FAILED(mDevice->CreateTexture2D(&texDesc, 0, &lDepthMap)))
-		MessageBox(0, "Error Creating DepthMap (DrawableTex2D", "Error", 0);
+	
 
 	D3D10_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 	dsvDesc.Format				= DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension		= D3D10_DSV_DIMENSION_TEXTURE2D;
 	dsvDesc.Texture2D.MipSlice	= 0;
 	
-	if(FAILED(mDevice->CreateDepthStencilView(lDepthMap, &dsvDesc, &mDepthMapDSV)))
-		MessageBox(0, "Error creating stencil view (drawabletex2d)", "Error" , 0);
+	
 	
 	D3D10_SHADER_RESOURCE_VIEW_DESC srvDesc;
 	srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
@@ -70,10 +68,16 @@ void DrawableTex2D::BuildDepthMap()
 	srvDesc.Texture2D.MipLevels = texDesc.MipLevels;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 
-	if(FAILED(mDevice->CreateShaderResourceView(lDepthMap, &srvDesc, &mDepthMapSRV)))
+	if(FAILED(mDevice->CreateTexture2D(&texDesc, 0, &mDepthMap)))
+		MessageBox(0, "Error Creating DepthMap (DrawableTex2D", "Error", 0);
+
+	if(FAILED(mDevice->CreateDepthStencilView(mDepthMap, &dsvDesc, &mDepthMapDSV)))
+		MessageBox(0, "Error creating stencil view (drawabletex2d)", "Error" , 0);
+
+	if(FAILED(mDevice->CreateShaderResourceView(mDepthMap, &srvDesc, &mDepthMapSRV)))
 		MessageBox(0, "Error creating resource view (drawabletex2d)" , "Error" , 0);
 
-	SAFE_RELEASE(lDepthMap);
+	//SAFE_RELEASE(mDepthMap);
 
 }
 
@@ -112,8 +116,10 @@ void DrawableTex2D::BuildColorMap()
 
 void DrawableTex2D::Begin()
 {
-	ID3D10RenderTargetView* lRenderTargets[1] = {mColorMapRTV};
-	mDevice->OMSetRenderTargets(1, lRenderTargets, mDepthMapDSV);
+	//ID3D10RenderTargetView* lRenderTargets[1] = {mColorMapRTV};
+
+	//mDevice->OMSetRenderTargets(1, lRenderTargets, mDepthMapDSV);
+	mDevice->OMSetRenderTargets(0, 0, mDepthMapDSV);
 	mDevice->RSSetViewports(1, &mViewport);
 
 	if(mColorMapRTV)

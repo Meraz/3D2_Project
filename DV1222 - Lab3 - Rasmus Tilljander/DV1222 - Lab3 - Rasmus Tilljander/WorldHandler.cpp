@@ -29,9 +29,17 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTech");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTechWireFrame");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "BuildShadowMapTech");
+	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "RenderBillboard");
 	mShaderObject->SetTechniqueByInteger(0);
+			
+	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/bth.obj", "FX/Object.fx"));
+	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/plane.obj", "FX/Object.fx"));
 
-	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "bth.obj", "FX/Object.fx"));
+	mObject.at(1)->Initialize(D3DXMATRIX(
+		5,0,0,0,
+		0,5,0,0,
+		0, 0, 5, 0,
+		0,0, 0, 1));
 	
 	SetResources();
 	mNumRows  = m;
@@ -90,7 +98,6 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 			D3DXVECTOR3 N;
 			D3DXVec3Cross(&N, &tanZ, &tanX);
 			D3DXVec3Normalize(&N, &N);
-
 			vertices[i*mNumCols+j].mNormal = N;
 		}
 	}
@@ -360,10 +367,21 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightWVP,ID3D10ShaderRe
     }
 
 	mObject.at(0)->Draw();
+	mObject.at(1)->Draw();
+
 
 	for(int i = 0; i < 50; i++)
 	{
 		mTree.at(i)->Draw();
 	}
+
+
+	mShaderObject->SetTechniqueByInteger(3);
+	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+	mShaderObject->Render(0);
+	mDevice->DrawIndexed(1, 0, 0);
+
+
+
 }
 

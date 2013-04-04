@@ -15,7 +15,7 @@ Sun::~Sun()
 void Sun::Initialize(ID3D10Device* lDevice, char* lFilename, UINT maxParticles, UINT lStructSize)
 {
 	ParticleSystem::Initialize(lDevice, lFilename, maxParticles, lStructSize);
-	mEmitPosition = D3DXVECTOR4(0, 512, -513 , 1.0f);
+	mEmitPosition = D3DXVECTOR4(0, 513, 400 , 1.0f);
 	mShaderObject->SetResource("Texture", GetResourceLoader().GetParticleTexture()); 
 }
 

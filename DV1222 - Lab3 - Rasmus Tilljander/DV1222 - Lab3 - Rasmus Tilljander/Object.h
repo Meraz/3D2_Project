@@ -10,13 +10,14 @@
 class Object
 {
 public:
-	Object();
+	Object(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, char* lFXFileName, int lNumberOfVertices);
 	virtual ~Object();
-	virtual void Object::Initialize(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, char* lFXFileName, int lNumberOfVertices);
+	virtual void Initialize(D3DXMATRIX lWorldMatrix);
 
 	virtual void Update(float lDeltaTime);
 	virtual void ShadowDraw(D3DXMATRIX lLightWVP);
 	virtual void Draw();
+
 
 protected:
 	D3DXVECTOR4 mPosition;

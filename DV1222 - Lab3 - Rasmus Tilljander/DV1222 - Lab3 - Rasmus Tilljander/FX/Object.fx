@@ -81,8 +81,16 @@ DepthStencilState NoDepthWrites
 {
     DepthEnable = TRUE;
     DepthWriteMask = ALL;
+	DepthFunc = LESS_EQUAL;
 };
-
+RasterizerState FrontFaceCulling
+{
+	CullMode = Front;
+};
+RasterizerState BackFaceCulling
+{
+	CullMode = Back;
+};
 
 //-----------------------------------------------------------------------------------------
 // Techniques
@@ -94,7 +102,7 @@ technique10 ColorTech
         SetVertexShader( CompileShader( vs_4_0, VS() ) );
         SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_4_0, PS() ) );
-        SetRasterizerState(Solidframe);
+       SetRasterizerState(Solidframe);
 		SetDepthStencilState( NoDepthWrites, 0 );
    }
 }
@@ -118,5 +126,7 @@ technique10 BuildShadowMapTech
 		SetVertexShader( CompileShader( vs_4_0, SHADOW_VS() ) );
 		SetGeometryShader( NULL );
 		SetPixelShader( CompileShader( ps_4_0, SHADOW_PS() ) );
+		SetDepthStencilState( NoDepthWrites, 0 );
+		SetRasterizerState(BackFaceCulling);
 	}
 }

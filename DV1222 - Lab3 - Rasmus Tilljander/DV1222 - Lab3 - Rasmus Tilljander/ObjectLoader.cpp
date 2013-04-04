@@ -6,7 +6,7 @@ ObjectLoader& GetObjectLoader()
 	return objectLoader;
 }
 
-Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, char* lObjFileName, char* lFXFileName)
+Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFilePath, char* lFXFileName)
 {
 	using namespace std;	
 
@@ -32,7 +32,7 @@ Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, char* lObjFileName, char
 	float x_1,x_2,x_3,y_1,y_2,y_3,z_1,z_2,z_3;
 
 	ifstream lStream;
-	lStream.open("Objects/bth.obj");
+	lStream.open(lFilePath.c_str());
 
 	char lBuffer[1024];
 
@@ -131,8 +131,7 @@ Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, char* lObjFileName, char
 	vinitData.pSysMem = lVertex.data();
 	lDevice->CreateBuffer(&vbd, &vinitData, &lVBuffer);
 
-	Object* lObject = new Object();
-	lObject->Initialize(lDevice, lVBuffer, lFXFileName, lVertex.size());
+	Object* lObject = new Object(lDevice, lVBuffer, lFXFileName, lVertex.size());
 
 	return lObject;
 }

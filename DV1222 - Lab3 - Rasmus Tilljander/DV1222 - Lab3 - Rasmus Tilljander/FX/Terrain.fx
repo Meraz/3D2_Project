@@ -1,4 +1,7 @@
 #include "ShadowMap.fx"
+
+
+
 cbuffer PerObject
 {
 	float4x4 WorldMatrix;
@@ -47,6 +50,7 @@ struct PixelShaderIn
     float2 tiledUV      : TEXCOORD0;
     float2 stretchedUV  : TEXCOORD1; 
 	float4 projTexC		: TEXCOORD2;
+	float4 wPos			: TEXCOORD3;
 };
 
 
@@ -56,14 +60,14 @@ struct PixelShaderIn
 PixelShaderIn VS(VertexShaderIn input)
 {
 	PixelShaderIn output;
-	
-	
-	output.projTexC = mul(input.Position, gLightWVP);
+		
 	output.normalVS = input.Normal;
 	
-	input.Position	= mul( input.Position, WorldMatrix );
-	output.Position	= mul( input.Position, ViewMatrix );
-	output.Position	= mul( output.Position, ProjectionMatrix);
+	output.Position	= mul( input.Position, WorldMatrix );
+	output.Position	= mul( output.Position, mul(ViewMatrix, ProjectionMatrix));
+	//output.Position	= mul( output.Position, ProjectionMatrix);
+	output.wPos		=   input.Position;
+	output.projTexC = mul(input.Position, gLightWVP);
 	
 	
 	output.tiledUV = gTexScale*input.TexCoord;
@@ -75,47 +79,82 @@ PixelShaderIn VS(VertexShaderIn input)
 //-----------------------------------------------------------------------------------------
 // PixelShader
 //-----------------------------------------------------------------------------------------
+
+
+float2 texOffset(int x, int y)
+{
+	//shadowmapsize x och y är atm hårdkodade värden i shadowmap.fx
+	return float2(x * 1.0f/ShadowMapSizeX, y * 1.0f/ShadowMapSizeY);
+}
 float4 PS(PixelShaderIn input) : SV_Target
 {
+	
     float4 c0 = gLayer0.Sample( gTriLinearSam, input.tiledUV );
 	float4 c1 = gLayer1.Sample( gTriLinearSam, input.tiledUV );
 	float4 c2 = gLayer2.Sample( gTriLinearSam, input.tiledUV );
 	float4 c3 = gLayer3.Sample( gTriLinearSam, input.tiledUV );
 
-
 	float4 t = gBlendMap.Sample( gTriLinearSam, input.stretchedUV ); 
     float4 C = c0;
 	C = lerp(C, c1, t.r);
-    C = lerp(C, c2, t.g);
-    C = lerp(C, c3, t.b);
+   C = lerp(C, c2, t.g);
+   C = lerp(C, c3, t.b);
+   //Om marken är helt i skugga får den ambient ljus.
+	float4 ambient = C/3;
 	//shadowmap stuff
-	input.projTexC.xyz/=input.projTexC.w;
+
+	//skala textur coordinaterna mellan 0 till 1
+	input.projTexC.xyz /= input.projTexC.w;
+
+	//Fixa texturkoordinater ifrån clip space coords
+	float2 smTex = float2(0.5f*input.projTexC.x, -0.5f*input.projTexC.y) + 0.5f;
 	
-	//transform clip space coords to texture space coords (-1:1 to 0:1)
-    input.projTexC.x = input.projTexC.x/2 + 0.5;
-	input.projTexC.y = input.projTexC.y/-2 + 0.5;
-	
+
 	//om positionen inte syns från ljuset, dvs utanför dess frustrum view ( händer typ bara i kanterna)
 	if( input.projTexC.x < -1.0f || input.projTexC.x > 1.0f ||
 	    input.projTexC.y < -1.0f || input.projTexC.y > 1.0f ||
-	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return (C - float4(0.5,0.5,0.5,0));
+	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ambient;
+
+		
+		
+		float x,y;
+		float sum = 0;
+
+		//nästlad forloop som utför ett pcf filter på shadowmappen
+		for(y = - 2 ; y <= 1.5; y += 1.0f) 
+		{
+			for(x = - 2 ; x <=1.5; x += 1.0f) 
+			{
+				sum += gShadowMap.SampleCmpLevelZero(cmpSampler, smTex + texOffset(x,y), input.projTexC.z - SHADOWBIAS);
+			}
+		}
+		//för att det inte ska bli så jävla ljust
+		float shadowCoeff = sum/16;
+
+
+
+	//	float s0 = (gShadowMap.Sample(gShadowSam, smTex).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
+	//	float s1 = (gShadowMap.Sample(gShadowSam, smTex + float2(dx, 0.0f)).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
+	//	float s2 = (gShadowMap.Sample(gShadowSam, smTex + float2(0.0f, dx)).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
+	//	float s3 = (gShadowMap.Sample(gShadowSam, smTex + float2(dx, dx)).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
 	
-	//shadowmap bias, tar bort alla roliga artefakter som dyker upp annars	
-	input.projTexC.z -= 0.2;
+	//float2 texelPos = smTex * SMAP_SIZE;
+	//float2 lerps = frac( texelPos );
+	//float shadowCoeff = lerp( lerp( s0, s1, lerps.x ),
+	//					lerp( s2, s3, lerps.x ),
+	//					lerps.y );
 	
-	float shadowMapDepth = gShadowMap.Sample(gShadowSam, input.projTexC.xy).r;
-	//Completly in shadow
-	if ( shadowMapDepth < input.projTexC.z) return (float4(1,1,1,1));
-	
-	//simpel pcf på en texel
-	float shadowFactor = gShadowMap.SampleCmpLevelZero( cmpSampler, input.projTexC.xy, input.projTexC.z);
     
 	
-	//fixa ljussättningen
-	float3 L =normalize(Sunpos - input.projTexC.xyz);
+	//fixa ljussättningen lite snyggare genom att låta normalerna skapa skuggor, gör så att det kan se lite buggat ut vid kanterna mellan den och shadowmappen
+	float3 L =normalize(Sunpos - input.wPos.xyz);
 	float ndotl = dot(normalize(input.normalVS), L);
-	
-	return float4(0,0,0,0) + C * ndotl * shadowFactor;
+	//returnera 
+	ndotl *= 0.8f;
+	if(shadowCoeff > 4.0f)
+	return ambient + C *  shadowCoeff ;
+	else
+	return ambient + C *  shadowCoeff * ndotl;
 }
 
 RasterizerState Wireframe
@@ -123,6 +162,14 @@ RasterizerState Wireframe
     FillMode = WireFrame;
     CullMode = Back;
     FrontCounterClockwise = false;
+};
+RasterizerState FrontFaceCulling
+{
+	CullMode = Front;
+};
+RasterizerState BackFaceCulling
+{
+	CullMode = Back;
 };
 
 RasterizerState Solidframe
@@ -136,6 +183,7 @@ DepthStencilState NoDepthWrites
 {
     DepthEnable = TRUE;
     DepthWriteMask = ALL;
+	DepthFunc = LESS_EQUAL;
 };
 
 technique10 ColorTech
@@ -168,5 +216,64 @@ technique10 BuildShadowMapTech
 		SetVertexShader( CompileShader( vs_4_0, SHADOW_VS() ) );
 		SetGeometryShader( NULL );
 		SetPixelShader( CompileShader( ps_4_0, SHADOW_PS() ) );
+		SetDepthStencilState( NoDepthWrites, 0 );
+		SetRasterizerState(BackFaceCulling);
 	}
+}
+
+
+// HÄR BÖRJAR SHADOWMAP BILLBOARDEN UTRININGS 
+SamplerState bilinearSampler
+{
+    Filter = min_mag_mip_linear;
+    AddressU = MIRROR;
+    AddressV = MIRROR;	
+};
+struct PS_INPUT2
+{
+	float4 pos : SV_POSITION;
+	float2 uv : TEXCOORD;
+};
+float4 VS2( VertexShaderIn input ) : SV_POSITION
+{
+	return float4(0,0,0,0);
+}
+[maxvertexcount(6)]
+void GS( point float4 s[1] : SV_POSITION, inout TriangleStream<PS_INPUT2> triStream )
+{
+	PS_INPUT2 p;
+	p.pos = float4(-1,0.50,0,1);
+	p.uv = float2(0,1);
+	triStream.Append(p);
+	
+	p.pos = float4(-1,1,0,1);
+	p.uv = float2(0,0);
+	triStream.Append(p);
+
+	p.pos = float4(-0.50,0.50,0,1);
+	p.uv = float2(1,1);
+	triStream.Append(p);
+
+	p.pos = float4(-0.50,1,0,1);
+	p.uv = float2(1,0);
+	triStream.Append(p);
+}
+float4 PS2( PS_INPUT2 input ) : SV_TARGET
+{		
+	float r = gShadowMap.Sample(bilinearSampler, input.uv).r;
+	return float4(r, r, r, 1);	
+}
+RasterizerState backFaceCulling
+{
+	cullmode = back;
+};
+technique10 RenderBillboard
+{
+    pass P0
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS2() ) );
+        SetGeometryShader( CompileShader( gs_4_0, GS() ) );
+        SetPixelShader( CompileShader( ps_4_0, PS2() ) );	
+		SetRasterizerState( Solidframe );		
+    }
 }

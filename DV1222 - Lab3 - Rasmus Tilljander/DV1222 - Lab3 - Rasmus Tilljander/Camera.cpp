@@ -167,3 +167,9 @@ void Camera::RebuildView()
 {
 	D3DXMatrixLookAtLH(&mView, &mPosition, &mAim, &mUp);
 }
+
+
+void Camera::SetAim(D3DXVECTOR3 lAim)
+{
+	mAim = lAim;
+}

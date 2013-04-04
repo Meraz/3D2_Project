@@ -160,13 +160,14 @@
     <None Include="Textures\Sun.dds">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Terrain.fx" />
     <None Include="Textures\HeightMap.raw">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Rain.fx" />
-    <None Include="Sun.fx" />
-    <None Include="FX\Tree.fx" />
     <None Include="FX\Object.fx" />
+    <None Include="FX\Rain.fx" />
+    <None Include="FX\ShadowMap.fx" />
+    <None Include="FX\Sun.fx" />
+    <None Include="FX\Terrain.fx" />
+    <None Include="FX\Tree.fx" />
   </ItemGroup>
 </Project>

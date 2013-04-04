@@ -102,10 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FX\Object.fx" />
+    <None Include="FX\Rain.fx" />
+    <None Include="FX\ShadowMap.fx" />
+    <None Include="FX\Sun.fx" />
+    <None Include="FX\Terrain.fx" />
     <None Include="FX\Tree.fx" />
-    <None Include="Rain.fx" />
-    <None Include="Sun.fx" />
-    <None Include="Terrain.fx" />
     <None Include="Textures\BlendMap.dds" />
     <None Include="Textures\DarkGrass.dds" />
     <None Include="Textures\FlameTexture.dds" />

@@ -26,6 +26,7 @@ public:
 	float mCameraAngleXZ;
 	void Update();
 
+	void SetAim(D3DXVECTOR3 lAim);
 
 public:
 	D3DXVECTOR3		GetPosition()		 const { return mPosition; }

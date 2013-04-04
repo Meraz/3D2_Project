@@ -24,6 +24,7 @@ private:
 
 public:
 private:
+	ID3D10Texture2D* mDepthMap;
 	UINT mWidth;
 	UINT mHeight;
 	DXGI_FORMAT mColorMapFormat;

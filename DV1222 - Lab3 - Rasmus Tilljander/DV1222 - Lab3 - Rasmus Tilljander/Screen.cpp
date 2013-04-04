@@ -38,9 +38,10 @@ void Screen::Initialize(ID3D10Device* lDevice, ID3D10RenderTargetView *lRenderTa
 	mParticleHandler->Initialize(lDevice);
 	mSunPosition = mParticleHandler->GetParticleSystemPosition(1);
 	
-	mShadowMap->Initialize(mDevice, mClientWidth/2, mClientHeight/2, false, DXGI_FORMAT_UNKNOWN);
+	mShadowMap->Initialize(mDevice, lClientWidth, lClientHeight, false, DXGI_FORMAT_UNKNOWN);
 
 	GetResourceLoader().LoadTextures(lDevice);
+//#define HeightOffset -20
 	GetCamera().SetYPosition(mWorldHandler->GetHeight(GetCamera().GetPosition().x, GetCamera().GetPosition().z) + HeightOffset);
 	GetCamera().RebuildView();
 	ShowCursor(false);
@@ -132,6 +133,11 @@ void Screen::KeyBoardMovement(float lWalkingSpeed, float lDeltaTime)
 		GetCamera().mCameraAngleXZ--;
 		GetCamera().Update();
 	}
+	
+	if(GetAsyncKeyState('R') & 0x8000) 
+	{
+		GetCamera().SetAim((D3DXVECTOR3)*mSunPosition);
+	}
 
 	if(GetAsyncKeyState('E') & 0x8000)
 	{
@@ -194,7 +200,7 @@ void Screen::UpdateSunWVP()
 	D3DXVECTOR3 lUp = D3DXVECTOR3(0,1,0);
 	//D3DXVec3Cross(&lUp, &lRight, D3DXVec3Normalize(&lSunPos,&lSunPos));
 		
-	D3DXMatrixPerspectiveFovLH(&lProj,0.5f*PI, (float)(mClientWidth/mClientHeight), 40.0f, 1000.0f);
+	D3DXMatrixPerspectiveFovLH(&lProj, 0.25f*PI, (float)(mClientWidth/mClientHeight), 40.0f, 1000.0f);
 	D3DXMatrixLookAtLH(&lView, &lSunPos, &lLookAt, &lUp);
 	mLightWVP = lView * lProj;
 }

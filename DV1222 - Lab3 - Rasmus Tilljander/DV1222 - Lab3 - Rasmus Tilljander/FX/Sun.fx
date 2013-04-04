@@ -126,8 +126,9 @@ void StreamOutGS(point Particle gIn[1],
 			
 			Particle p;
 			p.initialPosW = EmitPosition.xyz;
-			p.initialVelW = 70.0f*vRandom;
-			p.sizeW       = float2(120.0f, 120.0f);
+			//p.initialVelW = 70.0f*vRandom;
+			p.initialVelW	= 0.0f;
+			p.sizeW       = float2(40.0f, 40.0f);
 			p.age         = 0.0f;
 			p.type        = PT_FLARE;
 			
@@ -143,7 +144,7 @@ void StreamOutGS(point Particle gIn[1],
 	else
 	{
 		// Specify conditions to keep particle; this may vary from system to system.
-		if( gIn[0].age <= 1.0f )
+		if( gIn[0].age <= 0.2f )
 			ptStream.Append(gIn[0]);
 	}		
 }
