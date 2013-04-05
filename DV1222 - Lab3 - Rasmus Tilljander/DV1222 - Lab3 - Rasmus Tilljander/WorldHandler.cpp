@@ -36,10 +36,10 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/plane.obj", "FX/Object.fx"));
 
 	mObject.at(0)->Initialize(D3DXMATRIX(
-		0.5,0,0,0,
-		0,0.5,0,0,
-		0, 0, 0.5, 0,
-		10,20, 10, 1));
+		0.3,0,0,0,
+		0,0.3,0,0,
+		0, 0, 0.3, 0,
+		30,40, 30, 1));
 	mObject.at(1)->Initialize(D3DXMATRIX(
 		5,0,0,0,
 		0,5,0,0,

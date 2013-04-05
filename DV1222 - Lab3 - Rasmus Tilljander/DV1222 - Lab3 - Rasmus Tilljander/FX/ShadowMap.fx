@@ -39,8 +39,8 @@ SamplerComparisonState cmpSampler
 {
    // sampler state
    Filter = COMPARISON_MIN_MAG_MIP_LINEAR;
-   AddressU = MIRROR;
-   AddressV = MIRROR;
+   AddressU = CLAMP;
+   AddressV = CLAMP;
 
    // sampler comparison state
    ComparisonFunc = LESS_EQUAL;
