@@ -43,7 +43,8 @@ private:
 	ParticleHandler* mParticleHandler;
 	POINT mLastMousePosition;
 	DrawableTex2D* mShadowMap;
-	D3DXMATRIX				mLightWVP;
+	D3DXMATRIX		mLightProj;
+	D3DXMATRIX		mLightView;
 	D3DXVECTOR4* mSunPosition;
 
 	

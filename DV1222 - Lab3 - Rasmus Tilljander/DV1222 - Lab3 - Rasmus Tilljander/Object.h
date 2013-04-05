@@ -15,7 +15,7 @@ public:
 	virtual void Initialize(D3DXMATRIX lWorldMatrix);
 
 	virtual void Update(float lDeltaTime);
-	virtual void ShadowDraw(D3DXMATRIX lLightWVP);
+	virtual void ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView);
 	virtual void Draw();
 
 

@@ -168,13 +168,13 @@ void Screen::Draw()
 {
 	//create the shadowmap texture
 	mShadowMap->Begin();
-	mWorldHandler->ShadowDraw(mLightWVP);
+	mWorldHandler->ShadowDraw(mLightProj, mLightView);
 	mShadowMap->End();
 
 	ResetOMTargetsAndViewport();
 
 
-	mWorldHandler->Draw(*mSunPosition, mLightWVP,  mShadowMap->GetDepthMap());
+	mWorldHandler->Draw(*mSunPosition, mLightProj, mLightView,  mShadowMap->GetDepthMap());
 	mParticleHandler->Draw();
 }
 
@@ -193,14 +193,13 @@ void Screen::ResetOMTargetsAndViewport()
 
 void Screen::UpdateSunWVP()
 {
-	D3DXMATRIX lView, lProj;
 	D3DXVECTOR3 lSunPos = (D3DXVECTOR3)*mSunPosition;
 	D3DXVECTOR3 lLookAt = D3DXVECTOR3(0,0,0);
 	D3DXVECTOR3 lRight = D3DXVECTOR3(1,0,0);
 	D3DXVECTOR3 lUp = D3DXVECTOR3(0,1,0);
 	//D3DXVec3Cross(&lUp, &lRight, D3DXVec3Normalize(&lSunPos,&lSunPos));
 		
-	D3DXMatrixPerspectiveFovLH(&lProj, 0.25f*PI, (float)(mClientWidth/mClientHeight), 40.0f, 1000.0f);
-	D3DXMatrixLookAtLH(&lView, &lSunPos, &lLookAt, &lUp);
-	mLightWVP = lView * lProj;
+	D3DXMatrixPerspectiveFovLH(&mLightProj, 0.25f*PI, (float)(mClientWidth/mClientHeight), 40.0f, 1000.0f);
+	D3DXMatrixLookAtLH(&mLightView, &lSunPos, &lLookAt, &lUp);
+	
 }

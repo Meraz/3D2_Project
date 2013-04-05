@@ -20,9 +20,9 @@ public:
 	virtual ~WorldHandler();
 	void Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx);
 	void Update(float lDeltaTime);
-	void ShadowDraw(D3DXMATRIX lLightWVP);
+	void ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView);
 
-	void Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightWVP,ID3D10ShaderResourceView* lShadowmap);
+	void Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap);
 
 	float Width() const;
 	float Depth() const;

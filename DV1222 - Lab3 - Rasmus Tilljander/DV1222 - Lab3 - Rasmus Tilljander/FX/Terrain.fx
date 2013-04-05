@@ -121,9 +121,9 @@ float4 PS(PixelShaderIn input) : SV_Target
 		float sum = 0;
 
 		//nästlad forloop som utför ett pcf filter på shadowmappen
-		for(y = - 2 ; y <= 1.5; y += 1.0f) 
+		for(y = - 2 ; y <= 2.0; y += 1.0f) 
 		{
-			for(x = - 2 ; x <=1.5; x += 1.0f) 
+			for(x = - 2 ; x <=2.0; x += 1.0f) 
 			{
 				sum += gShadowMap.SampleCmpLevelZero(cmpSampler, smTex + texOffset(x,y), input.projTexC.z - SHADOWBIAS);
 			}
@@ -131,18 +131,6 @@ float4 PS(PixelShaderIn input) : SV_Target
 		//för att det inte ska bli så jävla ljust
 		float shadowCoeff = sum/16;
 
-
-
-	//	float s0 = (gShadowMap.Sample(gShadowSam, smTex).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
-	//	float s1 = (gShadowMap.Sample(gShadowSam, smTex + float2(dx, 0.0f)).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
-	//	float s2 = (gShadowMap.Sample(gShadowSam, smTex + float2(0.0f, dx)).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
-	//	float s3 = (gShadowMap.Sample(gShadowSam, smTex + float2(dx, dx)).r + SHADOWBIAS < input.projTexC.z) ? 0.0f : 1.0f;
-	
-	//float2 texelPos = smTex * SMAP_SIZE;
-	//float2 lerps = frac( texelPos );
-	//float shadowCoeff = lerp( lerp( s0, s1, lerps.x ),
-	//					lerp( s2, s3, lerps.x ),
-	//					lerps.y );
 	
     
 	

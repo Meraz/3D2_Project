@@ -33,9 +33,12 @@ void Object::Update(float lDeltaTime)
 
 }
 
-void Object::ShadowDraw(D3DXMATRIX lLightWVP)
+void Object::ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView)
 {
 	mShaderObject->SetTechniqueByInteger(2);
+	D3DXMATRIX lLightWVP;
+	D3DXMatrixMultiply(&lLightWVP, &mWorldMatrix, &lLightView);
+	D3DXMatrixMultiply(&lLightWVP, &lLightWVP, &lLightProj);
 	mShaderObject->SetMatrix("gLightWVP", lLightWVP);
 	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	

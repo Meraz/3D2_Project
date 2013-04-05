@@ -35,6 +35,11 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/bth.obj", "FX/Object.fx"));
 	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/plane.obj", "FX/Object.fx"));
 
+	mObject.at(0)->Initialize(D3DXMATRIX(
+		0.5,0,0,0,
+		0,0.5,0,0,
+		0, 0, 0.5, 0,
+		10,20, 10, 1));
 	mObject.at(1)->Initialize(D3DXMATRIX(
 		5,0,0,0,
 		0,5,0,0,
@@ -316,9 +321,12 @@ void WorldHandler::Update(float lDeltaTime)
 }
 
 
-void WorldHandler::ShadowDraw(D3DXMATRIX lLightWVP)
+void WorldHandler::ShadowDraw( D3DXMATRIX lLightProj, D3DXMATRIX lLightView)
 {
 	mShaderObject->SetTechniqueByInteger(2);
+	D3DXMATRIX lLightWVP; 
+	D3DXMatrixMultiply(&lLightWVP, &mWorldMatrix, &lLightView);
+	D3DXMatrixMultiply(&lLightWVP, &lLightWVP, &lLightProj);
 	mShaderObject->SetMatrix("gLightWVP", lLightWVP);
 	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -338,15 +346,19 @@ void WorldHandler::ShadowDraw(D3DXMATRIX lLightWVP)
 		mDevice->DrawIndexed(mNumFaces*3,0,0);
 	}
 
-	mObject.at(0)->ShadowDraw(lLightWVP);
+	mObject.at(0)->ShadowDraw(lLightProj, lLightView);
 	mShaderObject->SetTechniqueByInteger(0);
 }
 
-void WorldHandler::Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightWVP,ID3D10ShaderResourceView* lShadowmap)
+void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap)
 {
+
 	mShaderObject->SetMatrix("WorldMatrix", mWorldMatrix);
 	mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
+	D3DXMATRIX lLightWVP; 
+	D3DXMatrixMultiply(&lLightWVP, &mWorldMatrix, &lLightView);
+	D3DXMatrixMultiply(&lLightWVP, &lLightWVP, &lLightProj);
 	mShaderObject->SetMatrix("gLightWVP", lLightWVP);
 	mShaderObject->SetFloat4("Sunpos", &lSunPos);
 	mShaderObject->SetResource("gShadowMap", lShadowmap);
