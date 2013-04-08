@@ -10,7 +10,8 @@
 #include "Vertex.h"
 #include "Camera.h"
 #include "ResourceLoader.h"
-#include "ObjectLoader.h"
+//#include "ObjectLoader.h"
+#include "ObjectFactory.h"
 #include "Tree.h"
 
 class WorldHandler
@@ -31,9 +32,9 @@ public:
 
 private:		
 	void SetResources();
-
 	void LoadHeightmap();
 	void Smooth();
+	void CreatObjects();
 
 	bool	InBounds(UINT i, UINT j);
 	float	Average(UINT i, UINT j);

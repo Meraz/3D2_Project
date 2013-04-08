@@ -10,9 +10,9 @@
 class Object
 {
 public:
-	Object(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, char* lFXFileName, int lNumberOfVertices);
+	Object(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, int lNumberOfVertices);
 	virtual ~Object();
-	virtual void Initialize(D3DXMATRIX lWorldMatrix);
+	virtual void Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName);
 
 	virtual void Update(float lDeltaTime);
 	virtual void ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView);
@@ -20,7 +20,6 @@ public:
 
 
 protected:
-	D3DXVECTOR4 mPosition;
 	D3DXMATRIX mWorldMatrix;
 	
 	ID3D10Device* mDevice;

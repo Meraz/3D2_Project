@@ -15,7 +15,7 @@ void Tree::Initialize(ID3D10Device* lDevice, D3DXVECTOR4 lPosition)
 	mDevice = lDevice;
 	mShaderObject->Initialize(lDevice, "FX/Tree.fx", D3D10_SHADER_ENABLE_STRICTNESS);
 	mShaderObject->AddTechniqueByName(BillboardVertexDescription, BillboardVertexInputLayoutNumElements, "DrawTech");
-	mShaderObject->SetResource("tex2D", GetResourceLoader().GetTreeTexture());
+	mShaderObject->SetResource("tex2D",  ResourceLoader::GetResourceLoader()->GetTreeTexture());
 	mShaderObject->SetTechniqueByInteger(0);
 	CreateVertexBuffer(1, lPosition);
 

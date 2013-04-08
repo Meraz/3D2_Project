@@ -8,10 +8,17 @@
 #include <vector>
 #include <string>
 
+struct BufferWrapper //Used to be able to return both the buffer and the size of the buffer
+{
+	ID3D10Buffer* mBuffer;
+	int mSize;
+	BufferWrapper(ID3D10Buffer* lBuffer, UINT lSize) : mBuffer(lBuffer), mSize(lSize){}
+};
+
 class ObjectLoader
 {
 public:
-	Object* LoadObject(ID3D10Device* lDevice, std::string lFilePath, char* lFXFileName);
+	BufferWrapper* LoadObject(ID3D10Device* lDevice, std::string lFilePath);
 
 private:
 

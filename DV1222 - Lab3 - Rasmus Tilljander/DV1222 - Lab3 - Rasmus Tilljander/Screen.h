@@ -8,6 +8,7 @@
 #include "WorldHandler.h"
 #include "GameTimer.h"
 #include "DrawableTex2D.h"
+#include "ResourceLoader.h"
 
 enum state
 {

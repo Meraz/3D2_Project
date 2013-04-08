@@ -1,15 +1,18 @@
-﻿Build started 2013-04-05 14:03:34.
+﻿Build started 2013-04-08 16:29:34.
      1>Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild".
+         Creating "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe" /NOLOGO d3d10.lib d3dx10.lib DxErr.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.lib" /MACHINE:X86 Debug\Camera.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe" /NOLOGO d3d10.lib d3dx10.lib DxErr.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.lib" /MACHINE:X86 Debug\ObjectBox.obj
+         Debug\Camera.obj
          Debug\DrawableTex2D.obj
          Debug\GameTimer.obj
+         Debug\GeneralObject.obj
          Debug\Main.obj
          Debug\Object.obj
+         Debug\ObjectFactory.obj
          Debug\ObjectLoader.obj
          Debug\ParticleHandler.obj
          Debug\ParticleSystem.obj
@@ -21,6 +24,7 @@
          Debug\Sun.obj
          Debug\Tree.obj
          Debug\WorldHandler.obj
+         LINK : J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe not found or not built by the last incremental link; performing full link
          DV1222 - Lab3 - Rasmus Tilljander.vcxproj -> J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe;#1" /manifest "Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest"
@@ -31,4 +35,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.37
+Time Elapsed 00:00:01.71

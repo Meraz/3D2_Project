@@ -1,20 +1,31 @@
-
 #include "ResourceLoader.h"
 
-ResourceLoader& GetResourceLoader()
+ResourceLoader* ResourceLoader::mResourceLoader = 0;
+
+ResourceLoader* ResourceLoader::GetResourceLoader()
 {
-	static ResourceLoader mResourceLoader; 
+	if(mResourceLoader == 0)
+		mResourceLoader = new ResourceLoader();
 	return mResourceLoader;
 }
 
 ResourceLoader::ResourceLoader()
 {
+	
 }
 
 ResourceLoader::~ResourceLoader()
 {
+
 }
 
+void ResourceLoader::Initialize(ID3D10Device* lDevice)
+{
+	LoadTextures(lDevice);
+}
+
+//Add memory management here
+ 
 void ResourceLoader::LoadTextures(ID3D10Device* lDevice)
 {
 	CreateTextureShader(lDevice, "Textures/BlendMap.dds" , &mBlendMapTexture);
@@ -27,7 +38,7 @@ void ResourceLoader::LoadTextures(ID3D10Device* lDevice)
 	CreateTextureShader(lDevice, "Textures/Sun.dds" , &mSunTexture);
 	CreateTextureShader(lDevice, "Textures/BTH.dds" , &mBTHTexture);
 	CreateTextureShader(lDevice, "Textures/Tree.png" , &mTreeTexture);
-
+	CreateTextureShader(lDevice, "Textures/Box.png" , &mBoxTexture);
 }
 
 void ResourceLoader::CreateTextureShader(ID3D10Device* lDevice, char* lTexturePath, ID3D10ShaderResourceView** lShaderResView)

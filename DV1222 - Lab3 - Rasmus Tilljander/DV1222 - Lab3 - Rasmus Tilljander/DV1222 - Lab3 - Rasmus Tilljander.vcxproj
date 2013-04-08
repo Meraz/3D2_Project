@@ -62,11 +62,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ObjectBox.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawableTex2D.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="GeneralObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="ParticleHandler.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -80,15 +83,19 @@
     <ClCompile Include="WorldHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjectBox.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableTex2D.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="GeneralObject.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="ParticleHandler.h" />
     <ClInclude Include="ParticleVertex.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Rain.h" />
+    <ClInclude Include="RayTracing.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Screen.h" />

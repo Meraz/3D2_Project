@@ -6,7 +6,9 @@ ObjectLoader& GetObjectLoader()
 	return objectLoader;
 }
 
-Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFilePath, char* lFXFileName)
+
+
+BufferWrapper* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFilePath)
 {
 	using namespace std;	
 
@@ -120,7 +122,7 @@ Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFilePath, c
 
 	ID3D10Buffer* lVBuffer = 0;
 
-	// Create the buffer to kick-off the particle system.
+	// Create the buffer
 	D3D10_BUFFER_DESC vbd;
     vbd.Usage = D3D10_USAGE_DEFAULT;
 	vbd.ByteWidth = sizeof(ObjectVertex) * lVertex.size();
@@ -130,8 +132,9 @@ Object* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFilePath, c
     D3D10_SUBRESOURCE_DATA vinitData;
 	vinitData.pSysMem = lVertex.data();
 	lDevice->CreateBuffer(&vbd, &vinitData, &lVBuffer);
+	BufferWrapper* lBufferWrapper = new BufferWrapper(lVBuffer, lVertex.size());
 
-	Object* lObject = new Object(lDevice, lVBuffer, lFXFileName, lVertex.size());
+	//Object* lObject = new Object(lDevice, &lVBuffer, lVertex.size());
 
-	return lObject;
+	return lBufferWrapper;
 }

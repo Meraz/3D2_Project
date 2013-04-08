@@ -27,7 +27,6 @@ void Screen::Initialize(ID3D10Device* lDevice, ID3D10RenderTargetView *lRenderTa
 	mRenderTargetView = lRenderTargetView;
 	mDepthStencilView = lDepthStencilView;
 
-
 	mWorldHandler->Initialize(lDevice, 513, 513, 1.0f);
 	
 	mGameTimer->Start();
@@ -40,7 +39,9 @@ void Screen::Initialize(ID3D10Device* lDevice, ID3D10RenderTargetView *lRenderTa
 	
 	mShadowMap->Initialize(mDevice, lClientWidth, lClientHeight, false, DXGI_FORMAT_UNKNOWN);
 
-	GetResourceLoader().LoadTextures(lDevice);
+	
+	
+
 //#define HeightOffset -20
 	GetCamera().SetYPosition(mWorldHandler->GetHeight(GetCamera().GetPosition().x, GetCamera().GetPosition().z) + HeightOffset);
 	GetCamera().RebuildView();

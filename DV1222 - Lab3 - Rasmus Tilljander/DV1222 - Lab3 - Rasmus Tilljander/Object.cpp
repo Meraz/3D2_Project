@@ -1,16 +1,10 @@
 #include "Object.h"
 
-Object::Object(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, char* lFXFileName, int lNumberOfVertices)
+Object::Object(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, int lNumberOfVertices)
 {
 	mShaderObject = new ShaderObject();
-	mPosition  = D3DXVECTOR4(0.0f, 0.0f, 0.0f, 1.0f);
 	mDevice = lDevice;
 	mVertexBuffer = lVertexBuffer;
-	mShaderObject->Initialize(mDevice, lFXFileName, D3D10_SHADER_ENABLE_STRICTNESS);
-	mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "ColorTech");
-	mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "ColorTechWireFrame");
-	mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "BuildShadowMapTech");
-	mShaderObject->SetResource("Texture", GetResourceLoader().GetBTHTexture());
 
 	D3DXMatrixIdentity(&mWorldMatrix);
 
@@ -23,9 +17,15 @@ Object::~Object()
 	SAFE_DELETE(mShaderObject);
 }
 
-void Object::Initialize(D3DXMATRIX lWorldMatrix)
+void Object::Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName)
 {
 	mWorldMatrix = lWorldMatrix;
+	mShaderObject->Initialize(mDevice, lFXFileName, D3D10_SHADER_ENABLE_STRICTNESS);
+
+	//mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "ColorTech");
+	//mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "ColorTechWireFrame");
+	//mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "BuildShadowMapTech");
+	//mShaderObject->SetResource("Texture", ResourceLoader::GetResourceLoader()->GetBTHTexture());
 }
 
 void Object::Update(float lDeltaTime)

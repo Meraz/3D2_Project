@@ -45,8 +45,8 @@ void Renderer::Initialize(HWND* lHwnd)
 	CreateSwapChain();
 	SetUpViewPort();
 	CreateBackBufferAndRenderTarget();
-	
-	GetResourceLoader().LoadTextures(mDevice);
+
+	ResourceLoader::GetResourceLoader()->Initialize(mDevice);	
 	mScreen->Initialize(mDevice, mRenderTargetView, mDepthStencilView, mHeight, mWidth);
 }
 

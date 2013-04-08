@@ -1,16 +1,16 @@
-#include <string>
-#include "Utilities.h"
-
 #ifndef RESOURCELOADER_H
 #define RESOURCELOADER_H
+
+#include <string>
+#include "Utilities.h"
 
 class ResourceLoader
 {
 public:
 
-	ResourceLoader();
-	~ResourceLoader();
-	void LoadTextures(ID3D10Device* lDevice);
+	static ResourceLoader* GetResourceLoader();
+	void Initialize(ID3D10Device* lDevice);
+
 
 #pragma region GetTextureMethods
 	ID3D10ShaderResourceView* GetBlendMapTexture() const 
@@ -55,13 +55,22 @@ public:
 	{
 		return mTreeTexture;
 	}
+
+	ID3D10ShaderResourceView* GetBoxTexture() const
+	{
+		return mBoxTexture;
+	}
 #pragma endregion
 
-private:
-	
-	void CreateTextureShader(ID3D10Device* lDevice, char* lTexturePath, ID3D10ShaderResourceView** lShaderResView);
-
 private:	
+	ResourceLoader();
+	~ResourceLoader();
+	void CreateTextureShader(ID3D10Device* lDevice, char* lTexturePath, ID3D10ShaderResourceView** lShaderResView);	
+	void LoadTextures(ID3D10Device* lDevice);
+
+
+private:
+	static ResourceLoader* mResourceLoader;
 	ID3D10ShaderResourceView* mBlendMapTexture;
 	ID3D10ShaderResourceView* mDarkGrassTexture;
 	ID3D10ShaderResourceView* mFlameTexture;
@@ -72,8 +81,7 @@ private:
 	ID3D10ShaderResourceView* mSunTexture;
 	ID3D10ShaderResourceView* mBTHTexture;
 	ID3D10ShaderResourceView* mTreeTexture;
-
+	ID3D10ShaderResourceView* mBoxTexture;
 };
-ResourceLoader& GetResourceLoader();
 
 #endif

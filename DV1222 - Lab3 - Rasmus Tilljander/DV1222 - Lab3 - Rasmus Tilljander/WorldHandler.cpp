@@ -30,21 +30,9 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTechWireFrame");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "BuildShadowMapTech");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "RenderBillboard");
-	mShaderObject->SetTechniqueByInteger(0);
-			
-	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/bth.obj", "FX/Object.fx"));
-	mObject.push_back(GetObjectLoader().LoadObject(mDevice, "Objects/plane.obj", "FX/Object.fx"));
+	mShaderObject->SetTechniqueByInteger(0);	
 
-	mObject.at(0)->Initialize(D3DXMATRIX(
-		0.3,0,0,0,
-		0,0.3,0,0,
-		0, 0, 0.3, 0,
-		30,40, 30, 1));
-	mObject.at(1)->Initialize(D3DXMATRIX(
-		5,0,0,0,
-		0,5,0,0,
-		0, 0, 5, 0,
-		0,0, 0, 1));
+	CreatObjects();
 	
 	SetResources();
 	mNumRows  = m;
@@ -153,6 +141,28 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 	CreateTrees();
 }
 
+void WorldHandler::CreatObjects()
+{
+	D3DXMATRIX lMatrix;
+	
+	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/bth.obj", LoadableObject::General));
+	lMatrix = D3DXMATRIX(
+		0.3,0,0,0,
+		0,0.3,0,0,
+		0, 0, 0.3, 0,
+		30,40, 30, 1);
+	mObject.at(0)->Initialize(lMatrix, "FX/Object.fx");
+
+
+	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/plane.obj", LoadableObject::General));
+	lMatrix = D3DXMATRIX(
+		5,0,0,0,
+		0,5,0,0,
+		0, 0, 5, 0,
+		0,0, 0, 1);
+	mObject.at(1)->Initialize(lMatrix, "FX/Object.fx");
+}
+
 void WorldHandler::CreateTrees()
 {
 	srand(time(NULL));
@@ -176,11 +186,13 @@ void WorldHandler::SetResources()
 	mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
 
-	mShaderObject->SetResource("gLayer0", GetResourceLoader().GetGrassTexture());
-	mShaderObject->SetResource("gLayer1", GetResourceLoader().GetStoneTexture());
-	mShaderObject->SetResource("gLayer2", GetResourceLoader().GetDarkGrassTexture());
-	mShaderObject->SetResource("gLayer3", GetResourceLoader().GetLavaTexture());
-	mShaderObject->SetResource("gBlendMap", GetResourceLoader().GetBlendMapTexture());
+	ResourceLoader* lResourceLoader = ResourceLoader::GetResourceLoader();
+
+	mShaderObject->SetResource("gLayer0", lResourceLoader->GetGrassTexture());
+	mShaderObject->SetResource("gLayer1", lResourceLoader->GetStoneTexture());
+	mShaderObject->SetResource("gLayer2", lResourceLoader->GetDarkGrassTexture());
+	mShaderObject->SetResource("gLayer3", lResourceLoader->GetLavaTexture());
+	mShaderObject->SetResource("gBlendMap", lResourceLoader->GetBlendMapTexture());
 }
 
 void WorldHandler::LoadHeightmap()
