@@ -16,7 +16,7 @@ public:
 
 	virtual void Update(float lDeltaTime);
 	virtual void ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView);
-	virtual void Draw();
+	virtual void Draw(D3DXVECTOR4 lSunPos,D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap);
 
 
 protected:

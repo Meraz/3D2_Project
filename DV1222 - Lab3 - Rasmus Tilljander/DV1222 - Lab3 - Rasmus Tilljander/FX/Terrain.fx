@@ -1,13 +1,13 @@
 #include "ShadowMap.fx"
 
-
+static const float SHADOWBIAS = 0.001f;
 
 cbuffer PerObject
 {
 	float4x4 WorldMatrix;
 	float4x4 ViewMatrix;
 	float4x4 ProjectionMatrix;
-	float4	 Sunpos;
+
 };
 
 cbuffer cbFixed
@@ -20,7 +20,7 @@ Texture2D gLayer1;
 Texture2D gLayer2;	
 Texture2D gLayer3;
 Texture2D gBlendMap;
-Texture2D gShadowMap;
+
 
 cbuffer cbPerObject
 {
@@ -81,11 +81,7 @@ PixelShaderIn VS(VertexShaderIn input)
 //-----------------------------------------------------------------------------------------
 
 
-float2 texOffset(int x, int y)
-{
-	//shadowmapsize x och y är atm hårdkodade värden i shadowmap.fx
-	return float2(x * 1.0f/ShadowMapSizeX, y * 1.0f/ShadowMapSizeY);
-}
+
 float4 PS(PixelShaderIn input) : SV_Target
 {
 	
@@ -139,10 +135,10 @@ float4 PS(PixelShaderIn input) : SV_Target
 	float ndotl = dot(normalize(input.normalVS), L);
 	//returnera 
 	ndotl *= 0.8f;
-	if(shadowCoeff > 4.0f)
+	//if(shadowCoeff > 4.0f)
 	return ambient + C *  shadowCoeff ;
-	else
-	return ambient + C *  shadowCoeff * ndotl;
+//	else
+//	return ambient + C *  shadowCoeff * ndotl;
 }
 
 RasterizerState Wireframe
@@ -151,14 +147,7 @@ RasterizerState Wireframe
     CullMode = Back;
     FrontCounterClockwise = false;
 };
-RasterizerState FrontFaceCulling
-{
-	CullMode = Front;
-};
-RasterizerState BackFaceCulling
-{
-	CullMode = Back;
-};
+
 
 RasterizerState Solidframe
 {
@@ -196,17 +185,6 @@ technique10 ColorTechWireFrame
         SetRasterizerState(Wireframe);
 		SetDepthStencilState( NoDepthWrites, 0 );
     }
-}
-technique10 BuildShadowMapTech
-{
-	pass P0
-	{
-		SetVertexShader( CompileShader( vs_4_0, SHADOW_VS() ) );
-		SetGeometryShader( NULL );
-		SetPixelShader( CompileShader( ps_4_0, SHADOW_PS() ) );
-		SetDepthStencilState( NoDepthWrites, 0 );
-		SetRasterizerState(BackFaceCulling);
-	}
 }
 
 

@@ -58,13 +58,18 @@ void Object::ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView)
 }
 
 
-void Object::Draw()
+void Object::Draw(D3DXVECTOR4 lSunPos,D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap)
 {
-	mShaderObject->SetTechniqueByInteger(2);
+	
 	mShaderObject->SetMatrix("WorldMatrix", mWorldMatrix);
 	mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
-
+	D3DXMATRIX lLightWVP; 
+	D3DXMatrixMultiply(&lLightWVP, &mWorldMatrix, &lLightView);
+	D3DXMatrixMultiply(&lLightWVP, &lLightWVP, &lLightProj);
+	mShaderObject->SetMatrix("gLightWVP", lLightWVP);
+	mShaderObject->SetFloat4("Sunpos", &lSunPos);
+	mShaderObject->SetResource("gShadowMap", lShadowmap);
 
 	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	

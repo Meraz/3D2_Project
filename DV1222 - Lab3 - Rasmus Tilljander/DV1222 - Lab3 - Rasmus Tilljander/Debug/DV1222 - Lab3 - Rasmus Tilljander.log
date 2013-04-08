@@ -1,30 +1,17 @@
-﻿Build started 2013-04-05 13:51:39.
-     1>Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" on node 2 (build target(s)).
+﻿Build started 2013-04-08 15:29:54.
+     1>Project "J:\3D_Projekt2\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe" /NOLOGO d3d10.lib d3dx10.lib DxErr.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.lib" /MACHINE:X86 Debug\Camera.obj
-         Debug\DrawableTex2D.obj
-         Debug\GameTimer.obj
-         Debug\Main.obj
-         Debug\Object.obj
-         Debug\ObjectLoader.obj
-         Debug\ParticleHandler.obj
-         Debug\ParticleSystem.obj
-         Debug\Rain.obj
-         Debug\Renderer.obj
-         Debug\ResourceLoader.obj
-         Debug\Screen.obj
-         Debug\ShaderObject.obj
-         Debug\Sun.obj
-         Debug\Tree.obj
-         Debug\WorldHandler.obj
-         LINK : J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe not found or not built by the last incremental link; performing full link
-     1>LINK : fatal error LNK1104: cannot open file 'J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe'
-     1>Done Building Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" (build target(s)) -- FAILED.
+         All outputs are up-to-date.
+         DV1222 - Lab3 - Rasmus Tilljander.vcxproj -> J:\3D_Projekt2\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild".
+         Touching "Debug\DV1222 - Lab3 - Rasmus Tilljander.lastbuildstate".
+     1>Done Building Project "J:\3D_Projekt2\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:03.27
+Time Elapsed 00:00:00.79

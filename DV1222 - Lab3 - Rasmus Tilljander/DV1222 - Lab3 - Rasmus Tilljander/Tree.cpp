@@ -41,6 +41,8 @@ void Tree::CreateVertexBuffer(int lSize, D3DXVECTOR4 lPosition)
 	mDevice->CreateBuffer(&vbd, &vinitData, &mVertexBuffer);
 }
 
+
+
 void Tree::Draw()
 {
 	D3DXMATRIXA16 a = GetCamera().GetViewMatrix() * GetCamera().GetProjectionMatrix();
