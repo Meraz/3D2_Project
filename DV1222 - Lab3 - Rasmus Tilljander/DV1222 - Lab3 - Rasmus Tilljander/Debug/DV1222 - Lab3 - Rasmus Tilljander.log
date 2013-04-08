@@ -1,7 +1,7 @@
-﻿Build started 2013-04-05 13:51:39.
+﻿Build started 2013-04-05 14:03:34.
      1>Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild".
        ClCompile:
          All outputs are up-to-date.
        Link:
@@ -21,10 +21,14 @@
          Debug\Sun.obj
          Debug\Tree.obj
          Debug\WorldHandler.obj
-         LINK : J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe not found or not built by the last incremental link; performing full link
-     1>LINK : fatal error LNK1104: cannot open file 'J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe'
-     1>Done Building Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" (build target(s)) -- FAILED.
+         DV1222 - Lab3 - Rasmus Tilljander.vcxproj -> J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe;#1" /manifest "Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild".
+         Touching "Debug\DV1222 - Lab3 - Rasmus Tilljander.lastbuildstate".
+     1>Done Building Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:03.27
+Time Elapsed 00:00:02.37
