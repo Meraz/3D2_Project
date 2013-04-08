@@ -65,9 +65,9 @@ float4 PS(PixelShaderIn input) : SV_Target
 	
 
 	//om positionen inte syns från ljuset, dvs utanför dess frustrum view ( händer typ bara i kanterna)
-	if( input.projTexC.x < -1.0f || input.projTexC.x > 1.0f ||
-	    input.projTexC.y < -1.0f || input.projTexC.y > 1.0f ||
-	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ambient;
+	//if( input.projTexC.x < -1.0f || input.projTexC.x > 1.0f ||
+	    //input.projTexC.y < -1.0f || input.projTexC.y > 1.0f ||
+	    //input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ambient;
 
 	float x,y;
 	float sum = 0;

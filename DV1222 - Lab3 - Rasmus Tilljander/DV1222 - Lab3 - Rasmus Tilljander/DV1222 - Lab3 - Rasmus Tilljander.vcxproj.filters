@@ -169,5 +169,6 @@
     <None Include="FX\Sun.fx" />
     <None Include="FX\Terrain.fx" />
     <None Include="FX\Tree.fx" />
+    <None Include="FX\Fog.fx" />
   </ItemGroup>
 </Project>

@@ -353,6 +353,10 @@ void WorldHandler::ShadowDraw( D3DXMATRIX lLightProj, D3DXMATRIX lLightView)
 void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap)
 {
 
+	float fogStart = 100.0f;
+	float fogEnd   = 150.0f;
+	mShaderObject->SetFloat("fogStart", fogStart);
+	mShaderObject->SetFloat("fogEnd", fogEnd);
 	mShaderObject->SetMatrix("WorldMatrix", mWorldMatrix);
 	mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());

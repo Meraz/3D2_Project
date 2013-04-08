@@ -1,6 +1,6 @@
 #include "ShadowMap.fx"
-
-static const float SHADOWBIAS = 0.001f;
+#include "Fog.fx"
+static const float SHADOWBIAS = 0.002f;
 
 cbuffer PerObject
 {
@@ -51,6 +51,7 @@ struct PixelShaderIn
     float2 stretchedUV  : TEXCOORD1; 
 	float4 projTexC		: TEXCOORD2;
 	float4 wPos			: TEXCOORD3;
+	float fogFactor		: FOG;
 };
 
 
@@ -68,7 +69,7 @@ PixelShaderIn VS(VertexShaderIn input)
 	//output.Position	= mul( output.Position, ProjectionMatrix);
 	output.wPos		=   input.Position;
 	output.projTexC = mul(input.Position, gLightWVP);
-	
+	output.fogFactor = CalculateFogFactor(mul(mul(input.Position, WorldMatrix) ,ViewMatrix).z);
 	
 	output.tiledUV = gTexScale*input.TexCoord;
 	output.stretchedUV = input.TexCoord;
@@ -109,7 +110,7 @@ float4 PS(PixelShaderIn input) : SV_Target
 	//om positionen inte syns från ljuset, dvs utanför dess frustrum view ( händer typ bara i kanterna)
 	if( input.projTexC.x < -1.0f || input.projTexC.x > 1.0f ||
 	    input.projTexC.y < -1.0f || input.projTexC.y > 1.0f ||
-	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ambient;
+	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ApplyFog(ambient, input.fogFactor);
 
 		
 		
@@ -136,7 +137,7 @@ float4 PS(PixelShaderIn input) : SV_Target
 	//returnera 
 	ndotl *= 0.8f;
 	//if(shadowCoeff > 4.0f)
-	return ambient + C *  shadowCoeff ;
+	return ambient + ApplyFog(C, input.fogFactor) *  shadowCoeff ;
 //	else
 //	return ambient + C *  shadowCoeff * ndotl;
 }
