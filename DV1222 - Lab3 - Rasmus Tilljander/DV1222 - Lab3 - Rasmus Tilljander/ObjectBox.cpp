@@ -25,13 +25,3 @@ void ObjectBox::Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName)
 	mShaderObject->AddTechniqueByName(BoxVertexLayout, BoxVertexInputLayoutNumElements, "ColorTech");
 	mShaderObject->AddTechniqueByName(BoxVertexLayout, BoxVertexInputLayoutNumElements, "ColorTechWireFrame");
 }
-
-void ObjectBox::Update()
-{
-
-}
-
-void ObjectBox::Draw()
-{
-
-}

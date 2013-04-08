@@ -117,7 +117,7 @@ void StreamOutGS(point Particle gIn[1],
 	
 	if( gIn[0].type == PT_EMITTER )
 	{	
-		// time to emit a new particle?
+		// time to emit a new particle
 		if( gIn[0].age > 0.005f )
 		{
 			float3 vRandom = RandUnitVec3(0.0f);
@@ -188,10 +188,9 @@ VS_OUT DrawVS(Particle vIn)
 	
 	// constant acceleration equation
 	vOut.posW = float4(0.5f*t*t*gAccelW + t*vIn.initialVelW + vIn.initialPosW, 1.0f);
-	
 	// fade color with time
 	float opacity = 1.0f - smoothstep(0.0f, 1.0f, t/1.0f);
-	vOut.color = float4(1.0f, 0.5f, 0.5f, opacity);
+	vOut.color = float4( 1.0f, 0.5f, 0.5f, opacity);
 	
 	vOut.sizeW = vIn.sizeW;
 	vOut.type  = vIn.type;

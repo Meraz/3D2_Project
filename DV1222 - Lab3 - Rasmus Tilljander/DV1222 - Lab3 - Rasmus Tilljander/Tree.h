@@ -28,7 +28,6 @@ public:
 	void Initialize(ID3D10Device* lDevice, D3DXVECTOR4 lPosition);
 	void Draw();
 
-
 private:
 	D3DXVECTOR4 mPosition;
 	D3DXMATRIX mWorldMatrix;

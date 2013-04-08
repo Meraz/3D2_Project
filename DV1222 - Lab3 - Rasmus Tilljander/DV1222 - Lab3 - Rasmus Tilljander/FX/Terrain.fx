@@ -1,13 +1,13 @@
 #include "ShadowMap.fx"
-
-
+#include "Fog.fx"
+static const float SHADOWBIAS = 0.002f;
 
 cbuffer PerObject
 {
 	float4x4 WorldMatrix;
 	float4x4 ViewMatrix;
 	float4x4 ProjectionMatrix;
-	float4	 Sunpos;
+
 };
 
 cbuffer cbFixed
@@ -20,7 +20,7 @@ Texture2D gLayer1;
 Texture2D gLayer2;	
 Texture2D gLayer3;
 Texture2D gBlendMap;
-Texture2D gShadowMap;
+
 
 cbuffer cbPerObject
 {
@@ -51,6 +51,7 @@ struct PixelShaderIn
     float2 stretchedUV  : TEXCOORD1; 
 	float4 projTexC		: TEXCOORD2;
 	float4 wPos			: TEXCOORD3;
+	float fogFactor		: FOG;
 };
 
 
@@ -68,7 +69,7 @@ PixelShaderIn VS(VertexShaderIn input)
 	//output.Position	= mul( output.Position, ProjectionMatrix);
 	output.wPos		=   input.Position;
 	output.projTexC = mul(input.Position, gLightWVP);
-	
+	output.fogFactor = CalculateFogFactor(mul(mul(input.Position, WorldMatrix) ,ViewMatrix).z);
 	
 	output.tiledUV = gTexScale*input.TexCoord;
 	output.stretchedUV = input.TexCoord;
@@ -81,11 +82,7 @@ PixelShaderIn VS(VertexShaderIn input)
 //-----------------------------------------------------------------------------------------
 
 
-float2 texOffset(int x, int y)
-{
-	//shadowmapsize x och y är atm hårdkodade värden i shadowmap.fx
-	return float2(x * 1.0f/ShadowMapSizeX, y * 1.0f/ShadowMapSizeY);
-}
+
 float4 PS(PixelShaderIn input) : SV_Target
 {
 	
@@ -113,7 +110,7 @@ float4 PS(PixelShaderIn input) : SV_Target
 	//om positionen inte syns från ljuset, dvs utanför dess frustrum view ( händer typ bara i kanterna)
 	if( input.projTexC.x < -1.0f || input.projTexC.x > 1.0f ||
 	    input.projTexC.y < -1.0f || input.projTexC.y > 1.0f ||
-	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ambient;
+	    input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ApplyFog(ambient, input.fogFactor);
 
 		
 		
@@ -139,10 +136,10 @@ float4 PS(PixelShaderIn input) : SV_Target
 	float ndotl = dot(normalize(input.normalVS), L);
 	//returnera 
 	ndotl *= 0.8f;
-	if(shadowCoeff > 4.0f)
-	return ambient + C *  shadowCoeff ;
-	else
-	return ambient + C *  shadowCoeff * ndotl;
+	//if(shadowCoeff > 4.0f)
+	return ambient + ApplyFog(C, input.fogFactor) *  shadowCoeff ;
+//	else
+//	return ambient + C *  shadowCoeff * ndotl;
 }
 
 RasterizerState Wireframe
@@ -151,14 +148,7 @@ RasterizerState Wireframe
     CullMode = Back;
     FrontCounterClockwise = false;
 };
-RasterizerState FrontFaceCulling
-{
-	CullMode = Front;
-};
-RasterizerState BackFaceCulling
-{
-	CullMode = Back;
-};
+
 
 RasterizerState Solidframe
 {
@@ -196,17 +186,6 @@ technique10 ColorTechWireFrame
         SetRasterizerState(Wireframe);
 		SetDepthStencilState( NoDepthWrites, 0 );
     }
-}
-technique10 BuildShadowMapTech
-{
-	pass P0
-	{
-		SetVertexShader( CompileShader( vs_4_0, SHADOW_VS() ) );
-		SetGeometryShader( NULL );
-		SetPixelShader( CompileShader( ps_4_0, SHADOW_PS() ) );
-		SetDepthStencilState( NoDepthWrites, 0 );
-		SetRasterizerState(BackFaceCulling);
-	}
 }
 
 

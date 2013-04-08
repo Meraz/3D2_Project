@@ -45,8 +45,8 @@ public:
 	void Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName);
 
 
-	void Update();
-	void Draw();
+	//void Update();
+	//void Draw();
 
 private:
 
