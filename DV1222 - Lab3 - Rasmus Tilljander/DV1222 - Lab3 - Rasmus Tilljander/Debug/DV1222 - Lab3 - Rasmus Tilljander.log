@@ -1,9 +1,19 @@
-﻿Build started 2013-04-08 16:29:34.
+﻿Build started 2013-04-08 16:43:48.
      1>Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt WorldHandler.cpp
+         WorldHandler.cpp
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(148): warning C4482: nonstandard extension used: enum 'LoadableObject' used in qualified name
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(153): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(153): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(153): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(157): warning C4482: nonstandard extension used: enum 'LoadableObject' used in qualified name
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(165): warning C4482: nonstandard extension used: enum 'LoadableObject' used in qualified name
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(176): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(181): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\worldhandler.cpp(182): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe" /NOLOGO d3d10.lib d3dx10.lib DxErr.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.lib" /MACHINE:X86 Debug\ObjectBox.obj
          Debug\Camera.obj
@@ -35,4 +45,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.71
+Time Elapsed 00:00:05.17

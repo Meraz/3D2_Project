@@ -6,8 +6,6 @@ ObjectLoader& GetObjectLoader()
 	return objectLoader;
 }
 
-
-
 BufferWrapper* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFilePath)
 {
 	using namespace std;	

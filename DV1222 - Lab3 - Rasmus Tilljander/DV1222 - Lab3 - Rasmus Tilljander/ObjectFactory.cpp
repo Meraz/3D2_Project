@@ -10,12 +10,10 @@ ObjectFactory* ObjectFactory::GetObjectFactory()
 	return mObjectFactory;
 }
 
-
 void ObjectFactory::Initialize(ID3D10Device* lDevice)
 {
-	mDevice = lDevice;
+	mDevice = lDevice;//might just remove this one again
 }
-
 
 Object* ObjectFactory::LoadObject(ID3D10Device* lDevice, std::string lFilePath, LoadableObject lObject)
 {

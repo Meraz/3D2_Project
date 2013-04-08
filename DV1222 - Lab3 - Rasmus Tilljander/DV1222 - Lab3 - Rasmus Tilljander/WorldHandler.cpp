@@ -161,6 +161,14 @@ void WorldHandler::CreatObjects()
 		0, 0, 5, 0,
 		0,0, 0, 1);
 	mObject.at(1)->Initialize(lMatrix, "FX/Object.fx");
+
+	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::General));
+	lMatrix = D3DXMATRIX(
+		1000,0,0,0,
+		0,1000,0,0,
+		0, 0, 1000, 0,
+		0,0, 0, 1);
+	mObject.at(2)->Initialize(lMatrix, "FX/Object.fx");
 }
 
 void WorldHandler::CreateTrees()
@@ -392,6 +400,7 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 
 	mObject.at(0)->Draw();
 	mObject.at(1)->Draw();
+	mObject.at(2)->Draw();
 
 
 	for(int i = 0; i < 50; i++)
@@ -399,13 +408,8 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 		mTree.at(i)->Draw();
 	}
 
-
 	mShaderObject->SetTechniqueByInteger(3);
 	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
 	mShaderObject->Render(0);
 	mDevice->DrawIndexed(1, 0, 0);
-
-
-
 }
-

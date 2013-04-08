@@ -7,13 +7,11 @@
 #include "ObjectBox.h"
 #include "ObjectLoader.h"
 
-
 enum LoadableObject
 {
 	General,
 	Box
 };
-
 
 class ObjectFactory
 {
@@ -28,9 +26,7 @@ private:
 	static ObjectFactory* mObjectFactory;
 	ID3D10Device* mDevice;
 	void Initialize(ID3D10Device* lDevice);
-
-
+	
 };
-
 
 #endif

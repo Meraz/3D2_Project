@@ -10,7 +10,6 @@
 #include "Vertex.h"
 #include "Camera.h"
 #include "ResourceLoader.h"
-//#include "ObjectLoader.h"
 #include "ObjectFactory.h"
 #include "Tree.h"
 
