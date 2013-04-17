@@ -93,8 +93,7 @@ void DrawableTex2D::BuildColorMap()
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.Usage = D3D10_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D10_BIND_RENDER_TARGET |
-	D3D10_BIND_SHADER_RESOURCE;
+	texDesc.BindFlags = D3D10_BIND_RENDER_TARGET |D3D10_BIND_SHADER_RESOURCE;
 	texDesc.CPUAccessFlags = 0;
 	texDesc.MiscFlags = D3D10_RESOURCE_MISC_GENERATE_MIPS;
 	if(FAILED(mDevice->CreateTexture2D(&texDesc, 0, &lColorMap)))

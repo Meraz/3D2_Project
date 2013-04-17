@@ -117,7 +117,7 @@ float4 PS(PixelShaderIn input) : SV_Target
 		float x,y;
 		float sum = 0;
 
-		//nästlad forloop som utför ett pcf filter på shadowmappen
+		//nästlad forloop som utför ett pcf filter på shadowmappen (5x5)
 		for(y = - 2 ; y <= 2.0; y += 1.0f) 
 		{
 			for(x = - 2 ; x <=2.0; x += 1.0f) 
@@ -125,8 +125,8 @@ float4 PS(PixelShaderIn input) : SV_Target
 				sum += gShadowMap.SampleCmpLevelZero(cmpSampler, smTex + texOffset(x,y), input.projTexC.z - SHADOWBIAS);
 			}
 		}
-		//för att det inte ska bli så jävla ljust
-		float shadowCoeff = sum/16;
+		//för att det inte ska bli så jefla ljust
+		float shadowCoeff = sum/25;
 
 	
     
