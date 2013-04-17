@@ -62,17 +62,11 @@ float4 PS(PixelShaderIn input) : SV_Target
 	input.projTexC.xyz /= input.projTexC.w;
 	//Fixa texturkoordinater ifrån clip space coords
 	float2 smTex = float2(0.5f*input.projTexC.x, -0.5f*input.projTexC.y) + 0.5f;
-	
-
-	//om positionen inte syns från ljuset, dvs utanför dess frustrum view ( händer typ bara i kanterna)
-	//if( input.projTexC.x < -1.0f || input.projTexC.x > 1.0f ||
-	    //input.projTexC.y < -1.0f || input.projTexC.y > 1.0f ||
-	    //input.projTexC.z < 0.0f  || input.projTexC.z > 1.0f ) return ambient;
 
 	float x,y;
 	float sum = 0;
 
-		//nästlad forloop som utför ett pcf filter på shadowmappen
+		//nästlad forloop som utför ett pcf filter på shadowmappen i ett 5x5 fält
 		for(y = - 2 ; y <= 2.0; y += 1.0f) 
 		{
 			for(x = - 2 ; x <=2.0; x += 1.0f) 
@@ -81,11 +75,12 @@ float4 PS(PixelShaderIn input) : SV_Target
 			}
 		}
 		//för att det inte ska bli så jävla ljust
-		float shadowCoeff = sum/16;
+		float shadowCoeff = sum/25;
 		//float shadowCoeff = gShadowMap.SampleCmpLevelZero(cmpSampler, smTex, input.projTexC.z - SHADOWBIAS);
 		float3 L =normalize(Sunpos - input.wPos.xyz);
 		float ndotl = dot(normalize(input.normalVS), L);
-		//atm så är det bara "normaluträknade" skuggor för shadowmapen ser förjävlig ut för att biasen e jobbig att få rätt....
+		//de normaluträknade skuggorna (aka de precis ovanför denna kommentaren) är mest till för att bth logan inte blir snyggt skuggad annars pga att
+		//shadowbiasen är lagom inte lätt att få till snyggt på den.
 	return ambient + a  * ndotl * shadowCoeff ;
 }
 

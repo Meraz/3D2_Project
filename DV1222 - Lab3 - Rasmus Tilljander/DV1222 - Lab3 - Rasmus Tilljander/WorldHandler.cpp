@@ -370,7 +370,8 @@ void WorldHandler::ShadowDraw( D3DXMATRIX lLightProj, D3DXMATRIX lLightView)
 	mShaderObject->SetTechniqueByInteger(0);
 }
 
-void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap)
+
+void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap, bool lCreateReflectionMap)
 {
 
 	float fogStart = 100.0f;
@@ -378,7 +379,10 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 	mShaderObject->SetFloat("fogStart", fogStart);
 	mShaderObject->SetFloat("fogEnd", fogEnd);
 	mShaderObject->SetMatrix("WorldMatrix", mWorldMatrix);
-	mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
+	if(lCreateReflectionMap == false)
+		mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetViewMatrix());
+	else
+		mShaderObject->SetMatrix("ViewMatrix", GetCamera().GetReflectionViewMatrix());
 	mShaderObject->SetMatrix("ProjectionMatrix", GetCamera().GetProjectionMatrix());
 	D3DXMATRIX lLightWVP; 
 	D3DXMatrixMultiply(&lLightWVP, &mWorldMatrix, &lLightView);
@@ -410,9 +414,12 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 	{
 		mTree.at(i)->Draw();
 	}
-
-	mShaderObject->SetTechniqueByInteger(3);
-	mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
-	mShaderObject->Render(0);
-	mDevice->DrawIndexed(1, 0, 0);
+	if(lCreateReflectionMap == false)
+	{
+		//Rita ut shadowmap texturen i högra hörnet
+		mShaderObject->SetTechniqueByInteger(3);
+		mDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+		mShaderObject->Render(0);
+		mDevice->DrawIndexed(1, 0, 0);
+	}
 }

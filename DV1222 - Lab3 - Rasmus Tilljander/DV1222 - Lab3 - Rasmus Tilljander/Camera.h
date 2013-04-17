@@ -14,7 +14,7 @@ public:
 	void Strafe(float d);
 	void Walk(float d);
 
-	//This will do something maybe, from header file
+	
 	void SetYPosition(float lY);
 	void Pitch(float lAngle);
 	void Yaw(float lAngle);
@@ -26,14 +26,17 @@ public:
 	float mCameraAngleXZ;
 	void Update();
 
+	void BuildViewReflection(float lOffset);
 	void SetAim(D3DXVECTOR3 lAim);
 
 public:
 	D3DXVECTOR3		GetPosition()		 const { return mPosition; }
 	D3DXMATRIX		GetViewMatrix()		 const { return mView; }
+	D3DXMATRIX		GetReflectionViewMatrix() const {return mReflectionView;};
 	D3DXMATRIX		GetProjectionMatrix() const { return mProj; }
 	D3DXVECTOR3 RotateY(D3DXVECTOR3 lVector, float lAngleInPI);
 	D3DXVECTOR3 RotateZ(D3DXVECTOR3 lVector, float lAngleInPI);
+
 
 private:
 	D3DXVECTOR3 Translation(D3DXVECTOR3 lVector, D3DXVECTOR3 lTranslationVector);
@@ -46,6 +49,7 @@ private:
 	D3DXVECTOR3 mAim;
 	D3DXVECTOR3 mDirection;
 
+	D3DXMATRIX mReflectionView;
 	D3DXMATRIX mView;
 	D3DXMATRIX mProj;
 };

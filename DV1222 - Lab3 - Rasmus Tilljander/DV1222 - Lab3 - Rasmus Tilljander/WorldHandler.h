@@ -22,7 +22,7 @@ public:
 	void Update(float lDeltaTime);
 	void ShadowDraw(D3DXMATRIX lLightProj, D3DXMATRIX lLightView);
 
-	void Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap);
+	void Draw(D3DXVECTOR4 lSunPos, D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap,bool lCreateReflectionMap);
 
 	float Width() const;
 	float Depth() const;

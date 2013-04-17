@@ -6,6 +6,7 @@ Screen::Screen()
 	mGameTimer			= new GameTimer();
 	mParticleHandler	= new ParticleHandler();
 	mShadowMap			= new DrawableTex2D();
+	mReflectionMap		= new DrawableTex2D();
 	mGravity = 9.82f*2;
 	mState = walking;
 	mSunPosition = 0;
@@ -36,7 +37,7 @@ void Screen::Initialize(ID3D10Device* lDevice, ID3D10RenderTargetView *lRenderTa
 
 	mParticleHandler->Initialize(lDevice);
 	mSunPosition = mParticleHandler->GetParticleSystemPosition(1);
-	
+	mReflectionMap->Initialize(mDevice,lClientWidth, lClientHeight, true, DXGI_FORMAT_R32G32B32A32_FLOAT);
 	mShadowMap->Initialize(mDevice, lClientWidth, lClientHeight, false, DXGI_FORMAT_UNKNOWN);
 
 	
@@ -68,7 +69,8 @@ void Screen::Update()
 	mDeltaTime = mGameTimer->GetDeltaTime();
 	mGameTime = mGameTimer->GetGameTime();
 
-
+	//tror det är skillnaden i position i z ledet som ska in som offset, might be wrong, kör på 50 sålänge
+	GetCamera().BuildViewReflection(50.0f);
 	GetCamera().RebuildView();	
 }
 
@@ -171,11 +173,15 @@ void Screen::Draw()
 	mShadowMap->Begin();
 	mWorldHandler->ShadowDraw(mLightProj, mLightView);
 	mShadowMap->End();
+	/*mReflectionMap->Begin();
+	mWorldHandler->Draw(*mSunPosition, mLightProj, mLightView,  mShadowMap->GetDepthMap(), true);
+	mReflectionMap->End();*/
+	
 
 	ResetOMTargetsAndViewport();
 
 
-	mWorldHandler->Draw(*mSunPosition, mLightProj, mLightView,  mShadowMap->GetDepthMap());
+	mWorldHandler->Draw(*mSunPosition, mLightProj, mLightView,  mShadowMap->GetDepthMap(), false);
 	mParticleHandler->Draw();
 }
 

@@ -29,7 +29,7 @@ void Camera::SetPosition(D3DXVECTOR3 lPosition)
 	mPosition = lPosition;
 }
 
-//This will do something maybe, from cpp
+
 void Camera::SetYPosition(float lY)
 {
 	mPosition.y = lY;
@@ -172,4 +172,34 @@ void Camera::RebuildView()
 void Camera::SetAim(D3DXVECTOR3 lAim)
 {
 	mAim = lAim;
+}
+
+
+void Camera::BuildViewReflection(float lOffset)
+{
+
+
+	//all hail www.rastertek.com/dx10tut27.html
+	D3DXVECTOR3 lUp, lPos, lLookat;
+	float lRadians;
+
+	//up vektorn
+	lUp = D3DXVECTOR3(0.0f, 1.0f,0.0f);
+
+	//Eftersom den ska reflektera i z-led så gör vi som vi gör med z axeln. (inverterar och  gör nåt coolt med offseten(läs på detta din n00b!) 
+
+	lPos.x = mPosition.x;
+	lPos.y = mPosition.y;
+	lPos.z = -mPosition.z + (lOffset * 2.0f);
+
+	//gör om rotationen till radianer
+	lRadians = mCameraAngleXZ *  0.0174532925f;
+
+	lLookat.x = sinf(lRadians) + mPosition.x;
+	lLookat.y = mPosition.y;
+	lLookat.z = cosf(lRadians) + mPosition.z;
+
+	D3DXMatrixLookAtLH(&mReflectionView, &lPos, &lLookat, &lUp);
+
+
 }
