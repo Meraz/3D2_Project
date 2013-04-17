@@ -134,5 +134,6 @@ BufferWrapper* ObjectLoader::LoadObject(ID3D10Device* lDevice, std::string lFile
 
 	//Object* lObject = new Object(lDevice, &lVBuffer, lVertex.size());
 
+
 	return lBufferWrapper;
 }

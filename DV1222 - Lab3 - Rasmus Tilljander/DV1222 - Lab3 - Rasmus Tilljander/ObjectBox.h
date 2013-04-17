@@ -1,11 +1,9 @@
 #ifndef OBJECTBOX_H
 #define OBJECTBOX_H
 
-#include "Utilities.h"
-#include "ShaderObject.h"
-#include "ResourceLoader.h"
+
 #include "Object.h"
-#include <vector>
+#include "Utilities.h"
 
 
 struct BoxVertex
@@ -43,21 +41,16 @@ public:
 	ObjectBox(ID3D10Device* lDevice, ID3D10Buffer* lVertexBuffer, int lNumberOfVertices);
 	virtual ~ObjectBox();
 	void Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName);
-
-
-	//void Update();
-	//void Draw();
+	void Update(float lDeltaTime);
 
 private:
+	float NotZero(float lFloat);
 
 private:
 	D3DXVECTOR4 mPosition;
-	D3DXMATRIX mWorldMatrix;
-	
-	ID3D10Device* mDevice;
-	ShaderObject* mShaderObject;
-	ID3D10Buffer* mVertexBuffer;
-	int mNumberOfVertices;
+	D3DXVECTOR3 mX;
+	D3DXVECTOR3 mY;
+	D3DXVECTOR3 mZ;
 };
 
 

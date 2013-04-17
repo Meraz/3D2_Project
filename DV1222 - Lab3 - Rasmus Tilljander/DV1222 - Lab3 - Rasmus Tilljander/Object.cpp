@@ -21,11 +21,6 @@ void Object::Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName)
 {
 	mWorldMatrix = lWorldMatrix;
 	mShaderObject->Initialize(mDevice, lFXFileName, D3D10_SHADER_ENABLE_STRICTNESS);
-
-	//mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "ColorTech");
-	//mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "ColorTechWireFrame");
-	//mShaderObject->AddTechniqueByName(ObjectVertexDescription, ObjectVertexInputLayoutNumElements, "BuildShadowMapTech");
-	//mShaderObject->SetResource("Texture", ResourceLoader::GetResourceLoader()->GetBTHTexture());
 }
 
 void Object::Update(float lDeltaTime)
@@ -87,5 +82,3 @@ void Object::Draw(D3DXVECTOR4 lSunPos,D3DXMATRIX lLightProj, D3DXMATRIX lLightVi
 		mDevice->Draw(mNumberOfVertices, 0);
     }
 }
-
-

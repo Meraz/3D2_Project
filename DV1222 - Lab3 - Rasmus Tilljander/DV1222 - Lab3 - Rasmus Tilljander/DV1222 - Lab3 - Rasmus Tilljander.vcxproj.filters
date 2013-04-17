@@ -78,10 +78,10 @@
     <ClCompile Include="GeneralObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectBox.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,5 +191,6 @@
     <None Include="FX\Terrain.fx" />
     <None Include="FX\Tree.fx" />
     <None Include="FX\Fog.fx" />
+    <None Include="FX\Box.fx" />
   </ItemGroup>
 </Project>

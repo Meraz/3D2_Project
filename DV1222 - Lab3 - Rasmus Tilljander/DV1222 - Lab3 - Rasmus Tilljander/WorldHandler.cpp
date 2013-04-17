@@ -162,13 +162,21 @@ void WorldHandler::CreatObjects()
 		0,0, 0, 1);
 	mObject.at(1)->Initialize(lMatrix, "FX/Object.fx");
 
-	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::General));
+	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
 	lMatrix = D3DXMATRIX(
-		1000,0,0,0,
-		0,1000,0,0,
-		0, 0, 1000, 0,
+		1,0,0,0,
+		0,1,0,0,
+		0, 0, 1, 0,
 		0,0, 0, 1);
-	mObject.at(2)->Initialize(lMatrix, "FX/Object.fx");
+	mObject.at(2)->Initialize(lMatrix, "FX/Box.fx");
+
+	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
+	lMatrix = D3DXMATRIX(
+		1,0,0,0,
+		0,1,0,0,
+		0, 0, 1, 0,
+		1,0, 0, 1);
+	mObject.at(3)->Initialize(lMatrix, "FX/Box.fx");
 }
 
 void WorldHandler::CreateTrees()
@@ -225,7 +233,7 @@ void WorldHandler::LoadHeightmap()
 	mHeightmap.resize(mNumRows * mNumCols, 0);
 	for(UINT i = 0; i < mNumRows * mNumCols; ++i)
 	{
-		mHeightmap[i] = (float)in[i] * 0.20f/*heightScale*/ + -20.0f/*heightOffset*/;
+		//mHeightmap[i] = (float)in[i] * 0.20f/*heightScale*/ + -20.0f/*heightOffset*/;
 	}
 }
 
@@ -337,7 +345,7 @@ float WorldHandler::GetHeight(float x, float z) const
 
 void WorldHandler::Update(float lDeltaTime)
 {
-	mObject.at(0)->Update(lDeltaTime);
+	//mObject.at(2)->Update(lDeltaTime);
 }
 
 
@@ -404,7 +412,10 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 
 
 	mObject.at(0)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
-	mObject.at(1)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	//mObject.at(1)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	mObject.at(2)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	mObject.at(3)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+
 
 	for(int i = 0; i < 50; i++)
 	{

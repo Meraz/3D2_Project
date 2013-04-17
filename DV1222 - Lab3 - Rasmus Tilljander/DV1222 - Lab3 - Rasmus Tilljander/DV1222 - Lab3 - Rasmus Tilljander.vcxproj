@@ -108,6 +108,7 @@
     <ClInclude Include="WorldHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FX\Box.fx" />
     <None Include="FX\Fog.fx" />
     <None Include="FX\Object.fx" />
     <None Include="FX\Rain.fx" />
