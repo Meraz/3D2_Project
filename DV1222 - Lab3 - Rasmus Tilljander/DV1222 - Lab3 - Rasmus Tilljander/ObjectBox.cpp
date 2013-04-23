@@ -24,17 +24,18 @@ void ObjectBox::Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName)
 	mPosition = D3DXVECTOR4(lWorldMatrix._41, lWorldMatrix._42, lWorldMatrix._43, 1);
 
 	mX = D3DXVECTOR3(
-		lWorldMatrix._11
+		1
 		,0,0);
 
 	mY = D3DXVECTOR3(0,
-		lWorldMatrix._22
+		1
 		,0);
 
 	mZ = D3DXVECTOR3(0,0,
-		lWorldMatrix._33
+		1
 		);
-	mAxisLength = D3DXVECTOR3(mX.x/2, mY.y/2, mZ.z/2);
+
+	mAxisLength = D3DXVECTOR3(mX.x/2*lWorldMatrix._11, mY.y/2*lWorldMatrix._22, mZ.z/2*lWorldMatrix._33);
 //	D3DXVec4Transform();
 
 	Object::Initialize(lWorldMatrix, lFXFileName);
@@ -78,18 +79,18 @@ void ObjectBox::Draw(D3DXVECTOR4 lSunPos,D3DXMATRIX lLightProj, D3DXMATRIX lLigh
 bool ObjectBox::Collision()
 {
 	D3DXVECTOR3 lRayOrin = GetCamera().GetPosition();
-	D3DXVECTOR3 lRayDirection = GetCamera().GetAim();
-	
+	D3DXVECTOR3 lRayDirection = GetCamera().GetAim();	
+	D3DXVec3Normalize(&lRayDirection, &lRayDirection);
 
-	double tmin = -9000;
-	double tmax =  9000;
-	float smallNumber = 0.00001;
+	double tmin = -900000;
+	double tmax =  900000;
+	float smallNumber = 0.00000001;
 	D3DXVECTOR3 p = D3DXVECTOR3(mPosition) - lRayOrin;
 	
 	D3DXVECTOR3 lArray[3];
 	lArray[0] = mX;
-	lArray[1] = mX;
-	lArray[2] = mX;
+	lArray[1] = mY;
+	lArray[2] = mZ;
 	float lFloatArray[3];
 	lFloatArray[0] = mAxisLength.x;
 	lFloatArray[1] = mAxisLength.y;
@@ -99,7 +100,6 @@ bool ObjectBox::Collision()
 	for(int i = 0; i < 3; i++)
 	{
 		e = D3DXVec3Dot(&lArray[i], &p);
-		//e = lArray[i].Dot(p);
 		f = D3DXVec3Dot(&lArray[i], &lRayDirection);
 		if(abs(f) > smallNumber)
 		{
@@ -107,9 +107,7 @@ bool ObjectBox::Collision()
 			float t2 = (e - lFloatArray[i]) / f;
 
 			if(t1 > t2) //10
-			{ 
 				std::swap(t1, t2);
-			}
 			if(t1 > tmin) //11
 				tmin = t1;
 			if(t2 < tmax) //12
@@ -121,10 +119,10 @@ bool ObjectBox::Collision()
 		}
 		else if(-e - lFloatArray[i] > 0 || - e + lFloatArray[i] < 0)
 			return false;
-		if(tmin > 0)
+	}		
+	if(tmin > 0)
 		{
-			return true;
+			return true; //tmin
 		}
-	}
-	return false;
+	return true; //tmax
 }

@@ -13,9 +13,9 @@ o Avancerad kameraflygning och navigering (1.0 - 5.0p) 		- Färdig, Inte kunna gå
 o Terräng (1.0 - 10.0p) - 									- Färdig, polish arbete. Fixa en bättre heigthmap
 o Skuggor (2.0 - 10.0p) - 									- Färdig, (bug kvar), polish arbete
 
-o Deferred rendering (2.0 - 10.0p) - 						- yes
+o Deferred rendering (2.0 - 10.0p) - 				- yes
 
-o Skuggor (2.0 - 10.0p) 									- ray tracing mot lådor
+o Skuggor (2.0 - 10.0p) 					- ray tracing mot lådor
 o Kollisionsdetektering (2.0p för stråle mot enkla objekt)	- Se raytracing
 
 

@@ -60,6 +60,7 @@ float4 PS(PixelShaderIn input) : SV_Target
 	if(c == 0)
 		return float4(0,0,1,0);
 	float4 a = Texture.Sample(TrilinearSample, input.TexCoord); 
+
 	return a;
 }
 

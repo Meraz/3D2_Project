@@ -84,7 +84,9 @@ PixelShaderIn VS(VertexShaderIn input)
 
 
 float4 PS(PixelShaderIn input) : SV_Target
-{
+{	
+if(input.Position.x > 1024/2-5 && input.Position.x < 1024/2+5 && input.Position.y > 768/2-5 && input.Position.y < 768/2+5)
+		return float4(0,1,0,0);
 	
     float4 c0 = gLayer0.Sample( gTriLinearSam, input.tiledUV );
 	float4 c1 = gLayer1.Sample( gTriLinearSam, input.tiledUV );
