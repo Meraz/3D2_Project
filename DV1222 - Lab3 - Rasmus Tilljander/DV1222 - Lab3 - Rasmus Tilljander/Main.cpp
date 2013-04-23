@@ -80,6 +80,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
 	}
 
 	
+	ShowCursor(true);
 	ShowWindow( g_hWnd, nCmdShow );
 	return S_OK;
 }

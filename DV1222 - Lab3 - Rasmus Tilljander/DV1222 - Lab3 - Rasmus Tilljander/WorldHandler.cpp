@@ -172,10 +172,10 @@ void WorldHandler::CreatObjects()
 
 	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
 	lMatrix = D3DXMATRIX(
-		1,0,0,0,
-		0,1,0,0,
-		0, 0, 1, 0,
-		1,0, 0, 1);
+		2,0,0,0,
+		0,2,0,0,
+		0, 0, 2, 0,
+		0,1, 0, 1);
 	mObject.at(3)->Initialize(lMatrix, "FX/Box.fx");
 }
 
@@ -233,7 +233,7 @@ void WorldHandler::LoadHeightmap()
 	mHeightmap.resize(mNumRows * mNumCols, 0);
 	for(UINT i = 0; i < mNumRows * mNumCols; ++i)
 	{
-		mHeightmap[i] = (float)in[i] * 0.20f/*heightScale*/ + -20.0f/*heightOffset*/;
+		//mHeightmap[i] = (float)in[i] * 0.20f/*heightScale*/ + -20.0f/*heightOffset*/;
 	}
 }
 
@@ -345,7 +345,7 @@ float WorldHandler::GetHeight(float x, float z) const
 
 void WorldHandler::Update(float lDeltaTime)
 {
-	//mObject.at(2)->Update(lDeltaTime);
+	mObject.at(3)->Update(lDeltaTime);
 }
 
 

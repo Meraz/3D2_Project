@@ -42,15 +42,19 @@ public:
 	virtual ~ObjectBox();
 	void Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName);
 	void Update(float lDeltaTime);
+	void Draw(D3DXVECTOR4 lSunPos,D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap);
+	
 
 private:
 	float NotZero(float lFloat);
+	bool Collision();
 
 private:
 	D3DXVECTOR4 mPosition;
 	D3DXVECTOR3 mX;
 	D3DXVECTOR3 mY;
 	D3DXVECTOR3 mZ;
+	D3DXVECTOR3 mAxisLength;
 };
 
 

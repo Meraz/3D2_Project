@@ -23,6 +23,7 @@ struct PixelShaderIn
 	float4 wPos			:TEXCOORD2;
 };
 
+float c;
 Texture2D Texture;
 
 SamplerState TrilinearSample
@@ -51,21 +52,13 @@ PixelShaderIn VS(VertexShaderIn input)
 	return output;
 }
 
-
-//-----------------------------------------------------------------------------------------
-// PixelShader
-//-----------------------------------------------------------------------------------------
-float4 PSNONSHADOW(PixelShaderIn input) : SV_Target
-{
-	float4 a = Texture.Sample(TrilinearSample, input.TexCoord); 
-	return a;
-}
-
 //-----------------------------------------------------------------------------------------
 // PixelShader
 //-----------------------------------------------------------------------------------------
 float4 PS(PixelShaderIn input) : SV_Target
-{
+{	
+	if(c == 0)
+		return float4(0,0,1,0);
 	float4 a = Texture.Sample(TrilinearSample, input.TexCoord); 
 	return a;
 }

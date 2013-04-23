@@ -31,6 +31,7 @@ public:
 
 public:
 	D3DXVECTOR3		GetPosition()		 const { return mPosition; }
+	D3DXVECTOR3		GetAim()			const { return mAim; }
 	D3DXMATRIX		GetViewMatrix()		 const { return mView; }
 	D3DXMATRIX		GetReflectionViewMatrix() const {return mReflectionView;};
 	D3DXMATRIX		GetProjectionMatrix() const { return mProj; }

@@ -18,17 +18,10 @@ ObjectBox::~ObjectBox()
 
 }
 
-//DO NOT ADD ROTATION ON lWorldMatrix
+//DO NOT ADD ROTATION ON lWorldMatrix before init
 void ObjectBox::Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName)
 {
-	float lX, lY, lZ;
-
-	lX = lWorldMatrix._41 + (lWorldMatrix._11 / 2);
-	lY = lWorldMatrix._42 + (lWorldMatrix._22 / 2);
-	lZ = lWorldMatrix._43 + (lWorldMatrix._33 / 2);
-
-	mPosition = 
-	D3DXVECTOR4(lX, lY, lZ, 1);
+	mPosition = D3DXVECTOR4(lWorldMatrix._41, lWorldMatrix._42, lWorldMatrix._43, 1);
 
 	mX = D3DXVECTOR3(
 		lWorldMatrix._11
@@ -41,6 +34,8 @@ void ObjectBox::Initialize(D3DXMATRIX lWorldMatrix, char* lFXFileName)
 	mZ = D3DXVECTOR3(0,0,
 		lWorldMatrix._33
 		);
+	mAxisLength = D3DXVECTOR3(mX.x/2, mY.y/2, mZ.z/2);
+//	D3DXVec4Transform();
 
 	Object::Initialize(lWorldMatrix, lFXFileName);
 	mShaderObject->AddTechniqueByName(BoxVertexLayout, BoxVertexInputLayoutNumElements, "ColorTech");
@@ -57,14 +52,79 @@ float ObjectBox::NotZero(float lFloat)
 
 void ObjectBox::Update(float lDeltaTime)
 {
-	float lRot = 1440*5/PI;
-	D3DXMATRIX lMatrix = D3DXMATRIX
-		(
-			cos(lRot), 0, -sin(lRot), 0,
-			0,1,0,0,
-			sin(lRot), 0, cos(lRot), 0,
-			0,0,0,1
-		);
-	D3DXMatrixMultiply(&mWorldMatrix, &mWorldMatrix, &lMatrix);
+	//float lRot = (PI*5)/360;
+	//D3DXMATRIX lMatrix = D3DXMATRIX
+	//	(
+	//		cos(lRot), 0, -sin(lRot), 0,
+	//		0,1,0,0,
+	//		sin(lRot), 0, cos(lRot), 0,
+	//		0,0,0,1
+	//	);
+	//D3DXMatrixMultiply(&mWorldMatrix, &mWorldMatrix, &lMatrix);
+
+	if(Collision())
+		mShaderObject->SetFloat("c", 1);
+	else
+		mShaderObject->SetFloat("c", 0);
+
+}       
+
+void ObjectBox::Draw(D3DXVECTOR4 lSunPos,D3DXMATRIX lLightProj, D3DXMATRIX lLightView,ID3D10ShaderResourceView* lShadowmap)
+{
+	//mShaderObject->SetFloat("c", 1);
+	Object::Draw(lSunPos, lLightProj, lLightView, lShadowmap);
 }
-                     
+
+bool ObjectBox::Collision()
+{
+	D3DXVECTOR3 lRayOrin = GetCamera().GetPosition();
+	D3DXVECTOR3 lRayDirection = GetCamera().GetAim();
+	
+
+	double tmin = -9000;
+	double tmax =  9000;
+	float smallNumber = 0.00001;
+	D3DXVECTOR3 p = D3DXVECTOR3(mPosition) - lRayOrin;
+	
+	D3DXVECTOR3 lArray[3];
+	lArray[0] = mX;
+	lArray[1] = mX;
+	lArray[2] = mX;
+	float lFloatArray[3];
+	lFloatArray[0] = mAxisLength.x;
+	lFloatArray[1] = mAxisLength.y;
+	lFloatArray[2] = mAxisLength.z;
+	float e, f;
+
+	for(int i = 0; i < 3; i++)
+	{
+		e = D3DXVec3Dot(&lArray[i], &p);
+		//e = lArray[i].Dot(p);
+		f = D3DXVec3Dot(&lArray[i], &lRayDirection);
+		if(abs(f) > smallNumber)
+		{
+			float t1 = (e + lFloatArray[i]) / f;
+			float t2 = (e - lFloatArray[i]) / f;
+
+			if(t1 > t2) //10
+			{ 
+				std::swap(t1, t2);
+			}
+			if(t1 > tmin) //11
+				tmin = t1;
+			if(t2 < tmax) //12
+				tmax = t2;
+			if(tmin > tmax)
+				return false;
+			if(tmax < 0)
+				return false;
+		}
+		else if(-e - lFloatArray[i] > 0 || - e + lFloatArray[i] < 0)
+			return false;
+		if(tmin > 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
