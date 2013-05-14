@@ -7,11 +7,14 @@ WorldHandler::WorldHandler()
 	mShaderObject = new ShaderObject();
 	mObject = std::vector<Object*>();
 	mTree = std::vector<Tree*>();
+	mSoundHandler = new SoundHandler();
+
 }
 
 WorldHandler::~WorldHandler()
 {
 	delete mShaderObject;
+	delete mSoundHandler;
 	SAFE_RELEASE(mVB);
 	SAFE_RELEASE(mIB);
 }
@@ -23,7 +26,19 @@ void WorldHandler::ChangeTechnique(int lVariable)
 
 void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx) 
 {
-	mDevice = lDevice;
+	mLeft = SoundListener();
+	mRight = SoundListener();
+	mLeft.Initialize(GetCamera().GetPosition(), Direction::Left);
+	mRight.Initialize(GetCamera().GetPosition(), Direction::Right);
+
+	/*
+		2,0.5f, 55, 1);
+		55,0.5f, 55, 1);
+		50,0.5f,2, 1);
+	*/
+	mSoundHandler->AddSource(D3DXVECTOR4(2, 0.5, 55, 1));
+	mSoundHandler->AddSource(D3DXVECTOR4(55, 0.5, 55, 1));
+	mSoundHandler->AddSource(D3DXVECTOR4(50, 0.5, 2, 1));
 
 	mShaderObject->Initialize( mDevice, "FX/Terrain.fx", D3D10_SHADER_ENABLE_STRICTNESS );
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTech");
@@ -167,16 +182,24 @@ void WorldHandler::CreatObjects()
 		1,0,0,0,
 		0,1,0,0,
 		0, 0, 1, 0,
-		0,0, 0, 1);
+		2,0.5f, 55, 1);
 	mObject.at(2)->Initialize(lMatrix, "FX/Box.fx");
 
 	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
 	lMatrix = D3DXMATRIX(
-		2,0,0,0,
-		0,2,0,0,
-		0, 0, 2, 0,
-		0,1, 0, 1);
+		1,0,0,0,
+		0,1,0,0,
+		0, 0, 1, 0,
+		55,0.5f, 55, 1);
 	mObject.at(3)->Initialize(lMatrix, "FX/Box.fx");
+
+	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
+	lMatrix = D3DXMATRIX(
+		1,0,0,0,
+		0,1,0,0,
+		0, 0, 1, 0,
+		50,0.5f, 2, 1);
+	mObject.at(4)->Initialize(lMatrix, "FX/Box.fx");
 }
 
 void WorldHandler::CreateTrees()
@@ -346,6 +369,8 @@ float WorldHandler::GetHeight(float x, float z) const
 void WorldHandler::Update(float lDeltaTime)
 {
 	mObject.at(3)->Update(lDeltaTime);
+	mLeft.Update(GetCamera().GetPosition());
+	mRight.Update(GetCamera().GetPosition());
 }
 
 
@@ -419,6 +444,7 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 	//mObject.at(1)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 	mObject.at(2)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 	mObject.at(3)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	mObject.at(4)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 
 
 	for(int i = 0; i < 50; i++)

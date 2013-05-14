@@ -32,6 +32,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="DirectX10.props" />
+    <Import Project="FMOD.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -62,6 +63,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FMODHandler.cpp" />
     <ClCompile Include="ObjectBox.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawableTex2D.cpp" />
@@ -78,11 +80,15 @@
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
+    <ClCompile Include="SoundHandler.cpp" />
+    <ClCompile Include="SoundListener.cpp" />
+    <ClCompile Include="SoundSource.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="WorldHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FMODHandler.h" />
     <ClInclude Include="ObjectBox.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableTex2D.h" />
@@ -101,6 +107,9 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="ObjectVertex.h" />
+    <ClInclude Include="SoundHandler.h" />
+    <ClInclude Include="SoundListener.h" />
+    <ClInclude Include="SoundSource.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Utilities.h" />

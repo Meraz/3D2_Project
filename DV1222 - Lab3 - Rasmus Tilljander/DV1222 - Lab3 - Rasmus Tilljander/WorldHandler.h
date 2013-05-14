@@ -12,6 +12,11 @@
 #include "ResourceLoader.h"
 #include "ObjectFactory.h"
 #include "Tree.h"
+#include "SoundListener.h"
+#include "SoundHandler.h"
+
+
+
 
 class WorldHandler
 {
@@ -66,6 +71,11 @@ private:
 	ID3D10ShaderResourceView* mLayer3;
 	
 	ID3D10ShaderResourceView* mBlendMap;
+
+	SoundListener mLeft;
+	SoundListener mRight;
+	SoundHandler* mSoundHandler;
+
 };
 
 #endif
