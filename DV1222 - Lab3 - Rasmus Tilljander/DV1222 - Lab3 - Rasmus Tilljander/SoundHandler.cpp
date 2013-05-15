@@ -19,9 +19,18 @@ void SoundHandler::Initialize()
 }
 
 
-void SoundHandler::AddSource(D3DXVECTOR4 lPosition)
+void SoundHandler::AddSource(char* lPath, D3DXVECTOR4 lPosition)
 {
 	SoundSource* lSource = new SoundSource();
-	lSource->Initialize(lPosition);
+	lSource->Initialize(lPath, lPosition);
 	mSource.push_back(lSource);
+}
+
+
+void SoundHandler::PlaySoundCustom()
+{
+	for(int i = 0; i < mSource.size(); i++)
+	{
+		mSource.at(i)->PlaySoundCustom();
+	}
 }

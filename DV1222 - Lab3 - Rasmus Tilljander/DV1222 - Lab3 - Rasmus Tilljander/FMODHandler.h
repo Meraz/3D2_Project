@@ -9,7 +9,9 @@ class FMODHandler
 {
 public:
 	static FMODHandler* GetFMODHandler();
-	FMOD::System* GetFMODSystem() const {return mSystem};
+	FMOD::System* GetFMODSystem() const {return mSystem;}
+	FMOD::Sound* GetSound(char* lPath);
+	void Update();
 
 private:
 	FMODHandler();

@@ -8,7 +8,7 @@ WorldHandler::WorldHandler()
 	mObject = std::vector<Object*>();
 	mTree = std::vector<Tree*>();
 	mSoundHandler = new SoundHandler();
-
+	
 }
 
 WorldHandler::~WorldHandler()
@@ -26,26 +26,28 @@ void WorldHandler::ChangeTechnique(int lVariable)
 
 void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx) 
 {
+	
 	mLeft = SoundListener();
 	mRight = SoundListener();
 	mLeft.Initialize(GetCamera().GetPosition(), Direction::Left);
 	mRight.Initialize(GetCamera().GetPosition(), Direction::Right);
 
 	/*
-		2,0.5f, 55, 1);
-		55,0.5f, 55, 1);
-		50,0.5f,2, 1);
+		2,0.5f, 55, 1
+		55,0.5f, 55, 1
+		50,0.5f,2, 1
 	*/
-	mSoundHandler->AddSource(D3DXVECTOR4(2, 0.5, 55, 1));
-	mSoundHandler->AddSource(D3DXVECTOR4(55, 0.5, 55, 1));
-	mSoundHandler->AddSource(D3DXVECTOR4(50, 0.5, 2, 1));
+	mSoundHandler->AddSource("Sound/Sound1.wav", D3DXVECTOR4(2, 0.5, 55, 1));
+	mSoundHandler->AddSource("Sound/Sound2.wav", D3DXVECTOR4(55, 0.5, 55, 1));
+	mSoundHandler->AddSource("Sound/Sound3.wav", D3DXVECTOR4(50, 0.5, 2, 1));
 
+	mDevice = lDevice;
 	mShaderObject->Initialize( mDevice, "FX/Terrain.fx", D3D10_SHADER_ENABLE_STRICTNESS );
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTech");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "ColorTechWireFrame");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "BuildShadowMapTech");
 	mShaderObject->AddTechniqueByName(VertexLayout, VertexInputLayoutNumElements, "RenderBillboard");
-	mShaderObject->SetTechniqueByInteger(0);	
+	mShaderObject->SetTechniqueByInteger(0);
 
 	CreatObjects();
 	
@@ -369,8 +371,17 @@ float WorldHandler::GetHeight(float x, float z) const
 void WorldHandler::Update(float lDeltaTime)
 {
 	mObject.at(3)->Update(lDeltaTime);
+
+	/* Sound */
+	//Ears
 	mLeft.Update(GetCamera().GetPosition());
 	mRight.Update(GetCamera().GetPosition());
+	
+	//Play sound
+	mSoundHandler->PlaySoundCustom();
+
+	//Keep engine running
+	FMODHandler::GetFMODHandler()->Update();
 }
 
 
