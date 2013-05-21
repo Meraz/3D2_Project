@@ -37,9 +37,10 @@ void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx)
 		55,0.5f, 55, 1
 		50,0.5f,2, 1
 	*/
-	mSoundHandler->AddSource("Sound/Sound1.wav", D3DXVECTOR4(2, 0.5, 55, 1));
-	mSoundHandler->AddSource("Sound/Sound2.wav", D3DXVECTOR4(55, 0.5, 55, 1));
-	mSoundHandler->AddSource("Sound/Sound3.wav", D3DXVECTOR4(50, 0.5, 2, 1));
+	mSoundHandler->AddSource("Sound/Sound3.wav", D3DXVECTOR4(0, 0, 5, 1));
+	//mSoundHandler->AddSource("Sound/Sound2.wav", D3DXVECTOR4(55, 0.5, 55, 1));
+	//mSoundHandler->AddSource("Sound/Sound3.wav", D3DXVECTOR4(50, 0.5, 2, 1));
+	mSoundHandler->PlaySoundCustom();
 
 	mDevice = lDevice;
 	mShaderObject->Initialize( mDevice, "FX/Terrain.fx", D3D10_SHADER_ENABLE_STRICTNESS );
@@ -184,7 +185,7 @@ void WorldHandler::CreatObjects()
 		1,0,0,0,
 		0,1,0,0,
 		0, 0, 1, 0,
-		2,0.5f, 55, 1);
+		0.0, 0.0f, 5.0f, 1);
 	mObject.at(2)->Initialize(lMatrix, "FX/Box.fx");
 
 	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
@@ -378,7 +379,7 @@ void WorldHandler::Update(float lDeltaTime)
 	mRight.Update(GetCamera().GetPosition());
 	
 	//Play sound
-	mSoundHandler->PlaySoundCustom();
+	mSoundHandler->Update();
 
 	//Keep engine running
 	FMODHandler::GetFMODHandler()->Update();
@@ -454,8 +455,8 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 	mObject.at(0)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 	//mObject.at(1)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 	mObject.at(2)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
-	mObject.at(3)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
-	mObject.at(4)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	//mObject.at(3)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	//mObject.at(4)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 
 
 	for(int i = 0; i < 50; i++)

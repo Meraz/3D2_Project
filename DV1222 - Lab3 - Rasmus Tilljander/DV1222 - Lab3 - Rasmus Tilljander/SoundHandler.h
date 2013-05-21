@@ -13,6 +13,7 @@ public:
 
 	void AddSource(char* lPath, D3DXVECTOR4 lPosition);
 	void PlaySoundCustom();
+	void Update();
 
 
 private:

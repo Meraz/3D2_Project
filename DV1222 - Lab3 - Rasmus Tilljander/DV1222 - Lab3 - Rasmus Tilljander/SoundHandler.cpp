@@ -34,3 +34,11 @@ void SoundHandler::PlaySoundCustom()
 		mSource.at(i)->PlaySoundCustom();
 	}
 }
+
+void SoundHandler::Update()
+{
+	for(int i = 0; i < mSource.size(); i++)
+	{
+		mSource.at(i)->Update();
+	}
+}

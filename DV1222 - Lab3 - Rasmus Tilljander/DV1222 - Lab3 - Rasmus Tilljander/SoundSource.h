@@ -2,6 +2,7 @@
 #define SOUNDSOURCE_H
 
 #include "Utilities.h"
+#include "Camera.h"
 #include "FMODHandler.h"
 
 enum SoundType
@@ -16,7 +17,7 @@ public:
 	SoundSource();
 	~SoundSource();
 	D3DXVECTOR4		GetPosition()		 const { return mPosition; }
-	FMOD::Sound* mSound;
+
 	void Initialize(char* lPath, D3DXVECTOR4 lPosition);
 
 	void Update();	
@@ -25,6 +26,11 @@ public:
 
 private:
 	D3DXVECTOR4 mPosition;
+	FMOD::Sound* mSound;
+	FMOD::Channel* mChannel;
+	D3DXVECTOR2 ConstantPower(double lPosition);	
+
+
 };
 
 

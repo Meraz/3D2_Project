@@ -33,6 +33,6 @@ FMOD::Sound* FMODHandler::GetSound(char* lPointer)
 {
 	FMOD::Sound* lSound;
 	mSystem->createSound(lPointer, FMOD_HARDWARE, 0, &lSound);
-	lSound->setMode(FMOD_LOOP_OFF);
+	lSound->setMode(FMOD_LOOP_NORMAL);
 	return lSound;
 }
