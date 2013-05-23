@@ -81,7 +81,6 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="SoundHandler.cpp" />
-    <ClCompile Include="SoundListener.cpp" />
     <ClCompile Include="SoundSource.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="Tree.cpp" />
@@ -108,7 +107,6 @@
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="ObjectVertex.h" />
     <ClInclude Include="SoundHandler.h" />
-    <ClInclude Include="SoundListener.h" />
     <ClInclude Include="SoundSource.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="Tree.h" />

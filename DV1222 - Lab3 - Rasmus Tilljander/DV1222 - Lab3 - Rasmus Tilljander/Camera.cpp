@@ -11,7 +11,7 @@ Camera::Camera()
 	mPosition	= D3DXVECTOR3(-0.0f, 0.0f, 0.0f);
 	mUp			= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	mAim		= D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-	mDirection	= D3DXVECTOR3(1.0f, 0.0f, 0.0f);;
+	mDirection	= D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 	mCameraAngleXY = 0.0;		//0-90	
 	mCameraAngleXZ = 0.0;		//0-360
 
@@ -55,7 +55,7 @@ void Camera::Walk(float d)
 
 void Camera::Update()
 {
-	////Aim
+	//Aim
 	D3DXVECTOR3 lAim = D3DXVECTOR3(1,0,0);
 	lAim = RotateZ(lAim, mCameraAngleXY*PI/180);
 	D3DXVec3Normalize(&lAim, &lAim);

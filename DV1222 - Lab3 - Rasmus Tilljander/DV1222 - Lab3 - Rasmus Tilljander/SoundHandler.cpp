@@ -19,10 +19,10 @@ void SoundHandler::Initialize()
 }
 
 
-void SoundHandler::AddSource(char* lPath, D3DXVECTOR4 lPosition)
+void SoundHandler::AddSource(char* lPath, D3DXVECTOR4 lPosition, SoundType lSoundType)
 {
 	SoundSource* lSource = new SoundSource();
-	lSource->Initialize(lPath, lPosition);
+	lSource->Initialize(lPath, lPosition, lSoundType);
 	mSource.push_back(lSource);
 }
 

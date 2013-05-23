@@ -7,8 +7,7 @@ WorldHandler::WorldHandler()
 	mShaderObject = new ShaderObject();
 	mObject = std::vector<Object*>();
 	mTree = std::vector<Tree*>();
-	mSoundHandler = new SoundHandler();
-	
+	mSoundHandler = new SoundHandler();	
 }
 
 WorldHandler::~WorldHandler()
@@ -26,20 +25,12 @@ void WorldHandler::ChangeTechnique(int lVariable)
 
 void WorldHandler::Initialize(ID3D10Device* lDevice, UINT m, UINT n, float dx) 
 {
-	
-	mLeft = SoundListener();
-	mRight = SoundListener();
-	mLeft.Initialize(GetCamera().GetPosition(), Direction::Left);
-	mRight.Initialize(GetCamera().GetPosition(), Direction::Right);
 
-	/*
-		2,0.5f, 55, 1
-		55,0.5f, 55, 1
-		50,0.5f,2, 1
-	*/
-	mSoundHandler->AddSource("Sound/Sound3.wav", D3DXVECTOR4(0, 0, 5, 1));
-	//mSoundHandler->AddSource("Sound/Sound2.wav", D3DXVECTOR4(55, 0.5, 55, 1));
-	//mSoundHandler->AddSource("Sound/Sound3.wav", D3DXVECTOR4(50, 0.5, 2, 1));
+	mSoundHandler->AddSource("Sound/LionKing.wav",	  D3DXVECTOR4(0,  0,    0, 1), SoundType::Background);
+	mSoundHandler->AddSource("Sound/HorriblePip.wav", D3DXVECTOR4(0,  0.5f, 5, 1), SoundType::FixedPosition);
+	mSoundHandler->AddSource("Sound/HorriblePip.wav", D3DXVECTOR4(50, 0.5f, 5, 1), SoundType::FixedPosition);
+	mSoundHandler->AddSource("Sound/HorriblePip.wav", D3DXVECTOR4(5,  0.5f, 50, 1), SoundType::FixedPosition);
+
 	mSoundHandler->PlaySoundCustom();
 
 	mDevice = lDevice;
@@ -185,7 +176,7 @@ void WorldHandler::CreatObjects()
 		1,0,0,0,
 		0,1,0,0,
 		0, 0, 1, 0,
-		0.0, 0.0f, 5.0f, 1);
+		0.0, 0.5f, 5.0f, 1);
 	mObject.at(2)->Initialize(lMatrix, "FX/Box.fx");
 
 	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
@@ -193,7 +184,7 @@ void WorldHandler::CreatObjects()
 		1,0,0,0,
 		0,1,0,0,
 		0, 0, 1, 0,
-		55,0.5f, 55, 1);
+		50.0, 0.5, 5, 1);
 	mObject.at(3)->Initialize(lMatrix, "FX/Box.fx");
 
 	mObject.push_back(ObjectFactory::GetObjectFactory()->LoadObject(mDevice, "Objects/Box.obj", LoadableObject::Box));
@@ -201,7 +192,7 @@ void WorldHandler::CreatObjects()
 		1,0,0,0,
 		0,1,0,0,
 		0, 0, 1, 0,
-		50,0.5f, 2, 1);
+		0, 0.5, 50, 1);
 	mObject.at(4)->Initialize(lMatrix, "FX/Box.fx");
 }
 
@@ -373,11 +364,6 @@ void WorldHandler::Update(float lDeltaTime)
 {
 	mObject.at(3)->Update(lDeltaTime);
 
-	/* Sound */
-	//Ears
-	mLeft.Update(GetCamera().GetPosition());
-	mRight.Update(GetCamera().GetPosition());
-	
 	//Play sound
 	mSoundHandler->Update();
 
@@ -455,8 +441,8 @@ void WorldHandler::Draw(D3DXVECTOR4 lSunPos,  D3DXMATRIX lLightProj, D3DXMATRIX 
 	mObject.at(0)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 	//mObject.at(1)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 	mObject.at(2)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
-	//mObject.at(3)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
-	//mObject.at(4)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	mObject.at(3)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
+	mObject.at(4)->Draw(lSunPos, lLightProj,  lLightView, lShadowmap);
 
 
 	for(int i = 0; i < 50; i++)

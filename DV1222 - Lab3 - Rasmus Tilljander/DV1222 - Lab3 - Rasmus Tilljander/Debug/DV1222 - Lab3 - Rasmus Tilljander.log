@@ -1,12 +1,15 @@
-﻿Build started 2013-05-21 17:00:46.
+﻿Build started 2013-05-23 15:06:19.
      1>Project "J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander\DV1222 - Lab3 - Rasmus Tilljander.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\DV1222 - Lab3 - Rasmus Tilljander.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc" /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt SoundSource.cpp
          SoundSource.cpp
-     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(84): warning C4244: '=' : conversion from 'const double' to 'FLOAT', possible loss of data
-     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(85): warning C4244: '=' : conversion from 'const double' to 'FLOAT', possible loss of data
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(22): warning C4482: nonstandard extension used: enum 'SoundType' used in qualified name
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(106): warning C4244: '=' : conversion from 'const double' to 'FLOAT', possible loss of data
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(107): warning C4244: '=' : conversion from 'const double' to 'FLOAT', possible loss of data
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(115): warning C4482: nonstandard extension used: enum 'SoundType' used in qualified name
+     1>j:\3d2_project\dv1222 - lab3 - rasmus tilljander\dv1222 - lab3 - rasmus tilljander\soundsource.cpp(116): warning C4305: 'argument' : truncation from 'double' to 'float'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.exe" /NOLOGO d3d10.lib d3dx10.lib DxErr.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\DV1222 - Lab3 - Rasmus Tilljander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\3D2_Project\DV1222 - Lab3 - Rasmus Tilljander\Debug\DV1222 - Lab3 - Rasmus Tilljander.lib" /MACHINE:X86 Debug\FMODHandler.obj
          Debug\ObjectBox.obj
@@ -26,7 +29,6 @@
          Debug\Screen.obj
          Debug\ShaderObject.obj
          Debug\SoundHandler.obj
-         Debug\SoundListener.obj
          Debug\SoundSource.obj
          Debug\Sun.obj
          Debug\Tree.obj
@@ -42,4 +44,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.56
+Time Elapsed 00:00:05.64

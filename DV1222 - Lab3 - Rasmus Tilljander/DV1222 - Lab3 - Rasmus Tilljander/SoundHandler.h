@@ -11,7 +11,8 @@ public:
 	~SoundHandler();
 	void Initialize();
 
-	void AddSource(char* lPath, D3DXVECTOR4 lPosition);
+	void AddSource(char* lPath, D3DXVECTOR4 lPosition, SoundType lSoundType);
+
 	void PlaySoundCustom();
 	void Update();
 

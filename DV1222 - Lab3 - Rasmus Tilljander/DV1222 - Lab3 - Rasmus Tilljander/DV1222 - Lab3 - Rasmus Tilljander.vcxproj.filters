@@ -96,9 +96,6 @@
     <ClCompile Include="SoundHandler.cpp">
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="SoundListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FMODHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -178,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="SoundHandler.h">
       <Filter>Header Files\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundListener.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FMODHandler.h">
       <Filter>Header Files</Filter>
